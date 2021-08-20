@@ -33,12 +33,21 @@
     "api-interfaces": {
       "tags": []
     },
+    "db": {
+      "tags": []
+    },
     "edge-mon": {
       "tags": []
     },
     "edge-mon-e2e": {
       "tags": [],
       "implicitDependencies": ["edge-mon"]
+    },
+    "models": {
+      "tags": []
+    },
+    "sensor-collector": {
+      "tags": []
     }
   }
 }

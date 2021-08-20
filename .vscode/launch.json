@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "pwa-node",
+      "request": "attach",
+      "name": "Attach Nestjs Api app",
+      "port": 9229
+    },
+    {
+      "type": "pwa-node",
+      "request": "attach",
+      "name": "Attach Nestjs Sensor-collector app",
+      "port": 9228,
+      "preLaunchTask": "sensor-collector:serve"
+    }
+  ]
+}

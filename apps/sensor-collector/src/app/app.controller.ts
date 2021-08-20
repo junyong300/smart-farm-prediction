@@ -1,0 +1,23 @@
+import { Controller, Get } from '@nestjs/common';
+import { Ctx, MessagePattern, Payload, RedisContext } from '@nestjs/microservices';
+import { SensorRequest } from '@lib/models/sensor';
+
+import { AppService } from './app.service';
+
+@Controller()
+export class AppController {
+  constructor(private readonly appService: AppService) {}
+
+  @Get()
+  getData() {
+    return this.appService.getData();
+  }
+
+  @MessagePattern('sensor')
+  handleSensorData(@Payload() data: SensorRequest, @Ctx() context: RedisContext) {
+    console.log(`channel: ${context.getChannel()}, data: ${data}`);
+    this.appService.saveSensorData(data);
+    return "ok";
+  }
+
+}

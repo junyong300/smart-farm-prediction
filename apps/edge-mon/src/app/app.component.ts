@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Message } from '@smart-farm-prediction/api-interfaces';
+import { Message } from '@lib/api-interfaces';
 
 @Component({
   selector: 'smart-farm-prediction-root',

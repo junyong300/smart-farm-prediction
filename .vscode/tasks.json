@@ -1,0 +1,10 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+    {
+      "label": "sensor-collector:serve",
+      "type": "shell",
+      "command": "npx ng serve sensor-collector --port=9228",
+    }
+  ]
+}

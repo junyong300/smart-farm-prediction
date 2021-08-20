@@ -13,7 +13,21 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"]
+            "assets": ["apps/api/src/assets"],
+            "externalDependencies": [
+              "amqplib",
+              "amqp-connection-manager",
+              "cache-manager",
+              "class-transformer",
+              "class-validator",
+              "grpc",
+              "kafkajs",
+              "mqtt",
+              "nats",
+              "class-transformer/storage",
+              "fastify-swagger",
+              "fastify-static"
+            ]
           },
           "configurations": {
             "production": {
@@ -62,6 +76,28 @@
           "outputs": ["{options.outputFile}"],
           "options": {
             "lintFilePatterns": ["libs/api-interfaces/**/*.ts"]
+          }
+        }
+      }
+    },
+    "db": {
+      "root": "libs/db",
+      "sourceRoot": "libs/db/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/db/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/db"],
+          "options": {
+            "jestConfig": "libs/db/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }
@@ -185,6 +221,92 @@
           "outputs": ["{options.outputFile}"],
           "options": {
             "lintFilePatterns": ["apps/edge-mon-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "models": {
+      "root": "libs/models",
+      "sourceRoot": "libs/models/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/models/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/models"],
+          "options": {
+            "jestConfig": "libs/models/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "sensor-collector": {
+      "root": "apps/sensor-collector",
+      "sourceRoot": "apps/sensor-collector/src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/sensor-collector",
+            "main": "apps/sensor-collector/src/main.ts",
+            "tsConfig": "apps/sensor-collector/tsconfig.app.json",
+            "assets": ["apps/sensor-collector/src/assets"],
+            "externalDependencies": [
+              "@nestjs/platform-express",
+              "@nestjs/websockets/socket-module",
+              "@nestjs/platform-ws",
+              "@nestjs/platform-socket.io",
+              "amqplib",
+              "amqp-connection-manager",
+              "cache-manager",
+              "grpc",
+              "kafkajs",
+              "mqtt",
+              "nats"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/sensor-collector/src/environments/environment.ts",
+                  "with": "apps/sensor-collector/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "sensor-collector:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/sensor-collector/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/sensor-collector"],
+          "options": {
+            "jestConfig": "apps/sensor-collector/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }

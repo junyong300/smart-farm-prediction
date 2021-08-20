@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Message } from '@smart-farm-prediction/api-interfaces';
+import { Message } from '@lib/api-interfaces';
 
 @Injectable()
 export class AppService {
