@@ -8,12 +8,16 @@
       "architect": {
         "build": {
           "builder": "@nrwl/node:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"],
+            "assets": [
+              "apps/api/src/assets"
+            ],
             "externalDependencies": [
               "amqplib",
               "amqp-connection-manager",
@@ -51,14 +55,20 @@
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["apps/api/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/api/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/api"],
+          "outputs": [
+            "coverage/apps/api"
+          ],
           "options": {
             "jestConfig": "apps/api/jest.config.js",
             "passWithNoTests": true
@@ -73,9 +83,13 @@
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["libs/api-interfaces/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/api-interfaces/**/*.ts"
+            ]
           }
         }
       }
@@ -87,14 +101,20 @@
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["libs/db/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/db/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/db"],
+          "outputs": [
+            "coverage/libs/db"
+          ],
           "options": {
             "jestConfig": "libs/db/jest.config.js",
             "passWithNoTests": true
@@ -110,7 +130,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/edge-mon",
             "index": "apps/edge-mon/src/index.html",
@@ -122,7 +144,9 @@
               "apps/edge-mon/src/favicon.ico",
               "apps/edge-mon/src/assets"
             ],
-            "styles": ["apps/edge-mon/src/styles.scss"],
+            "styles": [
+              "apps/edge-mon/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -190,7 +214,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/edge-mon"],
+          "outputs": [
+            "coverage/apps/edge-mon"
+          ],
           "options": {
             "jestConfig": "apps/edge-mon/jest.config.js",
             "passWithNoTests": true
@@ -218,9 +244,13 @@
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["apps/edge-mon-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/edge-mon-e2e/**/*.{js,ts}"
+            ]
           }
         }
       }
@@ -232,14 +262,20 @@
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["libs/models/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/models/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/models"],
+          "outputs": [
+            "coverage/libs/models"
+          ],
           "options": {
             "jestConfig": "libs/models/jest.config.js",
             "passWithNoTests": true
@@ -254,12 +290,16 @@
       "architect": {
         "build": {
           "builder": "@nrwl/node:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/sensor-collector",
             "main": "apps/sensor-collector/src/main.ts",
             "tsConfig": "apps/sensor-collector/tsconfig.app.json",
-            "assets": ["apps/sensor-collector/src/assets"],
+            "assets": [
+              "apps/sensor-collector/src/assets"
+            ],
             "externalDependencies": [
               "@nestjs/platform-express",
               "@nestjs/websockets/socket-module",
@@ -296,17 +336,59 @@
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["apps/sensor-collector/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/sensor-collector/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/sensor-collector"],
+          "outputs": [
+            "coverage/apps/sensor-collector"
+          ],
           "options": {
             "jestConfig": "apps/sensor-collector/jest.config.js",
             "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ml": {
+      "projectType": "application",
+      "root": "apps/ml",
+      "sourceRoot": "apps/ml/src",
+      "architect": {
+        "build": {
+          "builder": "@nx-python/nx-python:build",
+          "options": {
+            "outputPath": "dist/apps/ml",
+            "main": "apps/ml/src/hello.py",
+            "templateType": "flask"
+          }
+        },
+        "serve": {
+          "builder": "@nx-python/nx-python:serve",
+          "options": {
+            "main": "apps/ml/src/hello.py",
+            "templateType": "flask"
+          }
+        },
+        "test": {
+          "builder": "@nx-python/nx-python:test",
+          "options": {
+            "main": "apps/ml/src/test_hello.py",
+            "templateType": "flask"
+          }
+        },
+        "lint": {
+          "builder": "@nx-python/nx-python:lint",
+          "options": {
+            "main": "apps/ml/src/hello.py",
+            "templateType": "flask"
           }
         }
       }
