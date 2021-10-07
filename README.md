@@ -1,3 +1,1 @@
-
-
 # smart-farm-prediction
