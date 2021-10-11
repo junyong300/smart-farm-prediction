@@ -19,12 +19,13 @@
               "apps/api/src/assets"
             ],
             "externalDependencies": [
+              "@nestjs/platform-socket.io",
               "amqplib",
               "amqp-connection-manager",
               "cache-manager",
               "class-transformer",
               "class-validator",
-              "grpc",
+              "@grpc/grpc-js",
               "kafkajs",
               "mqtt",
               "nats",
@@ -308,7 +309,7 @@
               "amqplib",
               "amqp-connection-manager",
               "cache-manager",
-              "grpc",
+              "@grpc/grpc-js",
               "kafkajs",
               "mqtt",
               "nats"
