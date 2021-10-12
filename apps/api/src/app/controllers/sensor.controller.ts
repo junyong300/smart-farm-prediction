@@ -3,6 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { timeout } from 'rxjs/operators';
 
 import { SensorRequest } from '@lib/models/sensor';
+import { Observable } from 'rxjs';
 
 @Controller('connfarm/api/device')
 export class SensorController {

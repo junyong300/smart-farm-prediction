@@ -1,4 +1,7 @@
+import { Type, Transform } from "class-transformer";
 export class CreateInternalEnvDto {
+  @Type(() => Date)
+  sensingDt: Date;
   temp: number;
   dryBulbTemp: number;
   wetBulbTemp: number;
@@ -7,5 +10,4 @@ export class CreateInternalEnvDto {
   lightness: number;
   solarRadiation: number;
   illuminance: number;
-  sensingDt: Date;
 }

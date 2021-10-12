@@ -14,12 +14,7 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ]
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
       }
     }
   },
@@ -38,6 +33,9 @@
     "api-interfaces": {
       "tags": []
     },
+    "config": {
+      "tags": []
+    },
     "db": {
       "tags": []
     },
@@ -46,17 +44,15 @@
     },
     "edge-mon-e2e": {
       "tags": [],
-      "implicitDependencies": [
-        "edge-mon"
-      ]
+      "implicitDependencies": ["edge-mon"]
+    },
+    "ml": {
+      "tags": []
     },
     "models": {
       "tags": []
     },
     "sensor-collector": {
-      "tags": []
-    },
-    "ml": {
       "tags": []
     }
   }

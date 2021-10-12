@@ -12,7 +12,7 @@
       "request": "attach",
       "name": "Attach Nestjs Sensor-collector app",
       "port": 9228,
-      "preLaunchTask": "sensor-collector:serve"
+      //"preLaunchTask": "sensor-collector:serve"
     }
   ]
 }
