@@ -11,9 +11,7 @@ async function bootstrap() {
     }
   });
 
-  await app.listen(() => {
-    Logger.log('Listening at redis://localhost:6379');
-  });
+  await app.listen();
 }
 
 bootstrap();

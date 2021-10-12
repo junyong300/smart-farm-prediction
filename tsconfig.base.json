@@ -20,7 +20,7 @@
       "@lib/db/*": ["libs/db/src/*"],
       "@lib/models": ["libs/models/src/index.ts"],
       "@lib/models/*": ["libs/models/src/*/index.ts"],
-      "@smart-farm-prediction/db": ["libs/db/src/index.ts"]
+      "@lib/config": ["libs/config/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
