@@ -16,11 +16,11 @@
     "baseUrl": ".",
     "paths": {
       "@lib/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@lib/config": ["libs/config/src/index.ts"],
       "@lib/db": ["libs/db/src/index.ts"],
       "@lib/db/*": ["libs/db/src/*"],
       "@lib/models": ["libs/models/src/index.ts"],
-      "@lib/models/*": ["libs/models/src/*/index.ts"],
-      "@lib/config": ["libs/config/src/index.ts"]
+      "@lib/models/*": ["libs/models/src/*/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
