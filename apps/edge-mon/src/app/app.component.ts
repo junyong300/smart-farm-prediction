@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpService } from './services/http.service';
+import { InternalDto } from '@lib/models/sensor';
 
 @Component({
   selector: 'smart-farm-prediction-root',
@@ -7,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  // hello$ = this.http.get<Message>('/api/hello');
+  hello$ = this.http.get<InternalDto[]>("getInternal", {key: 'value'});
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpService) {}
 }

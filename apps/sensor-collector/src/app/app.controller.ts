@@ -20,4 +20,10 @@ export class AppController {
     return "ok";
   }
 
+  @MessagePattern('getInternal')
+  getInternal(@Payload() data, @Ctx() context: RedisContext) {
+    console.log(`channel: ${context.getChannel()}, data: ${data}`);
+    return this.appService.getInternal(data);
+  }
+
 }

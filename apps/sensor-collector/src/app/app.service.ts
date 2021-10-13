@@ -66,4 +66,8 @@ export class AppService {
       );
     }
   }
+
+  getInternal(param) {
+    return this.internalRepo.find();
+  }
 }

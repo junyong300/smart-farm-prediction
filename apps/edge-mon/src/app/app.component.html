@@ -1,9 +1,8 @@
-<div style="text-align: center">
-  <h1>Welcome to edge-mon!</h1>
-  <img
-    width="450"
-    src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png"
-    alt="Nx - Smart, Extensible Build Framework"
-  />
-</div>
-<div>Message: {{ hello$ | async | json }}</div>
+<h1>Edge monitor</h1>
+
+<table>
+<tr *ngFor="let internal of hello$ | async">
+  <td>{{internal.sensingTime | date}}</td>
+  <td>{{internal.temp}}</td>
+</tr>
+</table>
