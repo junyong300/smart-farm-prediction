@@ -1,11 +1,19 @@
-import { Body, Controller, Get, Inject, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Post, Query, Res } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices'
 import { timeout } from 'rxjs/operators';
+
 import { AppService } from './app.service';
+import * as path from 'path';
 
 @Controller()
 export class AppController {
   constructor(@Inject('REDIS') private redis: ClientProxy) {}
+
+  @Get('')
+  root(@Res() response): void {
+    // the homepage will load our index.html which contains angular logic
+    response.sendFile(path.resolve(path.join(__dirname, '..', 'frontend/edge-mon/index.html')));
+  }
 
   @Get('/api/cmd.json')
   getCmd(@Query() q) {

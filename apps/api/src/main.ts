@@ -13,6 +13,7 @@ async function bootstrap() {
   });
 
   const configService = app.get<ConfigService>(ConfigService);
+  // app.useGlobalFilters(new NotFoundExceptionFilter());
 
   const config = new DocumentBuilder()
     .setTitle('Edge api')

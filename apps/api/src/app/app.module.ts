@@ -1,18 +1,21 @@
-import { Module } from '@nestjs/common';
-import { ClientProxyFactory, ClientsModule, Transport } from '@nestjs/microservices';
-import { ServeStaticModule } from '@nestjs/serve-static';
+import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
+import { ClientProxyFactory, Transport } from '@nestjs/microservices';
+// import { ServeStaticModule } from '@nestjs/serve-static';
 import { CommonConfigModule } from '@lib/config';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { SensorController } from './controllers/sensor.controller';
-import { join } from 'path';
 import { ConfigService } from '@nestjs/config';
+import { FrontendMiddleware } from './middlewares/frontend.middleware';
+//import { join } from 'path';
 
 @Module({
   imports: [
+    /*
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, 'assets')
     }),
+    */
     CommonConfigModule
   ],
   controllers: [AppController, SensorController],
@@ -23,7 +26,7 @@ import { ConfigService } from '@nestjs/config';
         return ClientProxyFactory.create({
           transport: Transport.REDIS,
           options: {
-            url: 'redis://localhost:' + configService.get<number>('REDIST_PORT'),
+            url: 'redis://localhost:' + configService.get<number>('REDIS_PORT'),
           }
         });
       },
@@ -31,4 +34,14 @@ import { ConfigService } from '@nestjs/config';
     }
   ]
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(FrontendMiddleware).forRoutes(
+      {
+        path: '/**', // For all routes
+        method: RequestMethod.ALL, // For all methods
+      },
+    );
+  }
+
+}

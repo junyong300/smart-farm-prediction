@@ -68,6 +68,11 @@ export class AppService {
   }
 
   getInternal(param) {
-    return this.internalRepo.find();
+    return this.internalRepo.find({
+      order: {
+        sensingTime: 'DESC'
+      },
+      take: 100
+    });
   }
 }

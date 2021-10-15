@@ -16,7 +16,6 @@
     "strictPropertyInitialization": false,
     "baseUrl": ".",
     "paths": {
-      "@lib/api-interfaces": ["libs/api-interfaces/src/index.ts"],
       "@lib/config": ["libs/config/src/index.ts"],
       "@lib/db": ["libs/db/src/index.ts"],
       "@lib/db/*": ["libs/db/src/*"],

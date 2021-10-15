@@ -10,25 +10,10 @@
           "builder": "@nrwl/node:build",
           "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "dist/apps/api",
+            "outputPath": "dist/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"],
-            "externalDependencies": [
-              "@nestjs/platform-socket.io",
-              "amqplib",
-              "amqp-connection-manager",
-              "cache-manager",
-              "class-transformer",
-              "class-validator",
-              "@grpc/grpc-js",
-              "kafkajs",
-              "mqtt",
-              "nats",
-              "class-transformer/storage",
-              "fastify-swagger",
-              "fastify-static"
-            ]
+            "assets": ["apps/api/src/assets"]
           },
           "configurations": {
             "production": {
@@ -122,7 +107,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "dist/apps/edge-mon",
+            "outputPath": "dist/frontend/edge-mon",
             "index": "apps/edge-mon/src/index.html",
             "main": "apps/edge-mon/src/main.ts",
             "polyfills": "apps/edge-mon/src/polyfills.ts",
@@ -243,30 +228,66 @@
         "build": {
           "builder": "@nx-python/nx-python:build",
           "options": {
-            "outputPath": "dist/apps/ml",
-            "main": "apps/ml/src/hello.py",
-            "templateType": "flask"
+            "outputPath": "dist/ml",
+            "main": "apps/ml/src/main.py",
+            "templateType": "default"
           }
         },
         "serve": {
           "builder": "@nx-python/nx-python:serve",
           "options": {
-            "main": "apps/ml/src/hello.py",
-            "templateType": "flask"
+            "main": "apps/ml/src/main.py",
+            "templateType": "default"
           }
         },
         "test": {
           "builder": "@nx-python/nx-python:test",
           "options": {
             "main": "apps/ml/src/test_hello.py",
-            "templateType": "flask"
+            "templateType": "default"
           }
         },
         "lint": {
           "builder": "@nx-python/nx-python:lint",
           "options": {
-            "main": "apps/ml/src/hello.py",
-            "templateType": "flask"
+            "main": "apps/ml/src/main.py",
+            "templateType": "default"
+          }
+        }
+      }
+    },
+    "ml-serving": {
+      "projectType": "application",
+      "root": "apps/ml-serving",
+      "sourceRoot": "apps/ml-serving/src",
+      "architect": {
+        "build": {
+          "builder": "@nx-python/nx-python:build",
+          "options": {
+            "outputPath": "dist/apps/ml-serving",
+            "main": "apps/ml-serving/src/hello.py",
+            "templateType": "default"
+          }
+        },
+        "serve": {
+          "builder": "@nx-python/nx-python:serve",
+          "options": {
+            "main": "apps/ml-serving/src/hello.py",
+            "templateType": "default"
+          }
+        },
+        "test": {
+          "builder": "@nx-python/nx-python:test",
+          "options": {
+            "main": "apps/ml-serving/src/test_hello.py",
+            "templateType": "default"
+          }
+        },
+        "lint": {
+          "builder": "@nx-python/nx-python:lint",
+          "options": {
+            "main": "apps/ml-serving/src/hello.py",
+            "templateType": "default"
           }
         }
       }
@@ -302,7 +323,7 @@
           "builder": "@nrwl/node:build",
           "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "dist/apps/sensor-collector",
+            "outputPath": "dist/sensor-collector",
             "main": "apps/sensor-collector/src/main.ts",
             "tsConfig": "apps/sensor-collector/tsconfig.app.json",
             "assets": ["apps/sensor-collector/src/assets"],
@@ -338,7 +359,8 @@
           "builder": "@nrwl/node:execute",
           "options": {
             "buildTarget": "sensor-collector:build",
-            "port": 9228
+            "port": 9228,
+            "args": ["resources/config/common.conf"]
           }
         },
         "lint": {
