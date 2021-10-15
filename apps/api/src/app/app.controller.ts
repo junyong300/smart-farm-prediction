@@ -1,12 +1,16 @@
 import { Body, Controller, Get, Inject, Param, Post, Query, Res } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices'
 import { timeout } from 'rxjs/operators';
+import { getLogger } from "log4js";
+import { Logger } from "@nestjs/common";
 
 import { AppService } from './app.service';
 import * as path from 'path';
 
 @Controller()
 export class AppController {
+  //private readonly logger = getLogger();
+  private readonly logger = new Logger(AppController.name);
   constructor(@Inject('REDIS') private redis: ClientProxy) {}
 
   @Get('')
@@ -17,6 +21,7 @@ export class AppController {
 
   @Get('/api/cmd.json')
   getCmd(@Query() q) {
+    this.logger.debug(q);
     return this.redis.send(q['cmd'], q['data']).pipe(timeout(3000));
   }
 

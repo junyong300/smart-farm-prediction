@@ -1,20 +1,24 @@
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import { WsAdapter } from '@nestjs/platform-ws';
+//import { WsAdapter } from '@nestjs/platform-ws';
 import { SwaggerModule, DocumentBuilder} from '@nestjs/swagger';
+import { LogWrapper } from '@lib/config';
 
 import { AppModule } from './app/app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const logWrapper = new LogWrapper("api", "info");
+
+  const app = await NestFactory.create(AppModule, {
+    logger: logWrapper
+  });
+
   app.enableCors({
     origin: '*'
   });
 
-  const configService = app.get<ConfigService>(ConfigService);
-  // app.useGlobalFilters(new NotFoundExceptionFilter());
-
+  const configService = app.get(ConfigService);
   const config = new DocumentBuilder()
     .setTitle('Edge api')
     .setDescription("API Description")

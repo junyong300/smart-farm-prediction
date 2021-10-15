@@ -1,1 +1,2 @@
-export * from './lib/config.module';
+export * from './config.module';
+export * from './log-wrapper';
