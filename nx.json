@@ -46,6 +46,9 @@
     "ml": {
       "tags": []
     },
+    "ml-serving": {
+      "tags": []
+    },
     "models": {
       "tags": []
     },
