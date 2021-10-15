@@ -17,13 +17,11 @@ export class AppController {
 
   @Get('/api/cmd.json')
   getCmd(@Query() q) {
-    console.log(q);
     return this.redis.send(q['cmd'], q['data']).pipe(timeout(3000));
   }
 
   @Post('/api/cmd.json')
   postCmd(@Body() body) {
-    console.log(body);
     return this.redis.send(body['cmd'], body['data']).pipe(timeout(3000));
   }
 }

@@ -18,7 +18,7 @@
           "configurations": {
             "production": {
               "optimization": true,
-              "extractLicenses": true,
+              "extractLicenses": false,
               "inspect": false,
               "fileReplacements": [
                 {
@@ -122,6 +122,7 @@
           },
           "configurations": {
             "production": {
+              "optimization": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -326,20 +327,7 @@
             "outputPath": "dist/sensor-collector",
             "main": "apps/sensor-collector/src/main.ts",
             "tsConfig": "apps/sensor-collector/tsconfig.app.json",
-            "assets": ["apps/sensor-collector/src/assets"],
-            "externalDependencies": [
-              "@nestjs/platform-express",
-              "@nestjs/websockets/socket-module",
-              "@nestjs/platform-ws",
-              "@nestjs/platform-socket.io",
-              "amqplib",
-              "amqp-connection-manager",
-              "cache-manager",
-              "@grpc/grpc-js",
-              "kafkajs",
-              "mqtt",
-              "nats"
-            ]
+            "assets": ["apps/sensor-collector/src/assets"]
           },
           "configurations": {
             "production": {

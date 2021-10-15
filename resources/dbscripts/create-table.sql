@@ -1,7 +1,8 @@
+create database farmconnect;
+
 CREATE SCHEMA IF NOT EXISTS farm;
 CREATE SCHEMA IF NOT EXISTS device;
 CREATE SCHEMA IF NOT EXISTS env;
-CREATE SCHEMA IF NOT EXISTS user;
 CREATE SCHEMA IF NOT EXISTS common;
 
 CREATE TABLE IF NOT EXISTS Common.Config (
@@ -19,7 +20,7 @@ CREATE TABLE IF NOT EXISTS Farm.Farm (
   Latitude float,
   Longitude float,
   area float,            -- 면적 m^2
-  Equipments varchar(1000)
+  Equipments varchar(1000),
   CreatedTime timestamp with time zone default now(),
   ModifiedTime timestamp with time zone,
   DeletedTime timestamp with time zone,
