@@ -1,0 +1,15 @@
+[Unit]
+Description=farmconnect-collector
+After=syslog.target network.target redis.service postgresql.service
+
+[Service]
+WorkingDirectory=/farmconnect/sensor-collector
+
+ExecStart=/bin/node /farmconnect/sensor-collector/main.js
+ExecStop=/bin/kill -15 $MAINPID
+
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
