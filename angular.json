@@ -315,19 +315,19 @@
         }
       }
     },
-    "sensor-collector": {
-      "root": "apps/sensor-collector",
-      "sourceRoot": "apps/sensor-collector/src",
+    "sensor": {
+      "root": "apps/sensor",
+      "sourceRoot": "apps/sensor/src",
       "projectType": "application",
       "architect": {
         "build": {
           "builder": "@nrwl/node:build",
           "outputs": ["{options.outputPath}"],
           "options": {
-            "outputPath": "dist/sensor-collector",
-            "main": "apps/sensor-collector/src/main.ts",
-            "tsConfig": "apps/sensor-collector/tsconfig.app.json",
-            "assets": ["apps/sensor-collector/src/assets"]
+            "outputPath": "dist/sensor",
+            "main": "apps/sensor/src/main.ts",
+            "tsConfig": "apps/sensor/tsconfig.app.json",
+            "assets": ["apps/sensor/src/assets"]
           },
           "configurations": {
             "production": {
@@ -336,8 +336,8 @@
               "inspect": false,
               "fileReplacements": [
                 {
-                  "replace": "apps/sensor-collector/src/environments/environment.ts",
-                  "with": "apps/sensor-collector/src/environments/environment.prod.ts"
+                  "replace": "apps/sensor/src/environments/environment.ts",
+                  "with": "apps/sensor/src/environments/environment.prod.ts"
                 }
               ]
             }
@@ -346,7 +346,7 @@
         "serve": {
           "builder": "@nrwl/node:execute",
           "options": {
-            "buildTarget": "sensor-collector:build",
+            "buildTarget": "sensor:build",
             "port": 9228,
             "args": ["resources/config/common.conf"]
           }
@@ -355,14 +355,14 @@
           "builder": "@nrwl/linter:eslint",
           "outputs": ["{options.outputFile}"],
           "options": {
-            "lintFilePatterns": ["apps/sensor-collector/**/*.ts"]
+            "lintFilePatterns": ["apps/sensor/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/sensor-collector"],
+          "outputs": ["coverage/apps/sensor"],
           "options": {
-            "jestConfig": "apps/sensor-collector/jest.config.js",
+            "jestConfig": "apps/sensor/jest.config.js",
             "passWithNoTests": true
           }
         }

@@ -52,7 +52,7 @@
     "models": {
       "tags": []
     },
-    "sensor-collector": {
+    "sensor": {
       "tags": []
     }
   }
