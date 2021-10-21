@@ -13,13 +13,7 @@ export class AppService {
     @InjectRepository(Internal) private internalRepo: Repository<Internal>,
     ) {}
 
-  getData(): { message: string } {
-    return { message: 'Welcome to sensor-collector!' };
-  }
-
   async saveSensorData(sensorRequest: SensorRequest) {
-    console.log(sensorRequest);
-
     switch(sensorRequest.type) {
       case 'internalEnv': {
         const device = await Device.findOne({ where: { serial: sensorRequest.idx }});

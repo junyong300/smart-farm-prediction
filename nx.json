@@ -26,34 +26,36 @@
       }
     ]
   },
-  "projects": {
-    "api": {
-      "tags": []
+  "cli": {
+    "defaultCollection": "@nrwl/angular",
+    "packageManager": "npm"
+  },
+  "defaultProject": "edge-mon",
+  "generators": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
     },
-    "config": {
-      "tags": []
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
     },
-    "db": {
-      "tags": []
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
     },
-    "edge-mon": {
-      "tags": []
-    },
-    "edge-mon-e2e": {
-      "tags": [],
-      "implicitDependencies": ["edge-mon"]
-    },
-    "ml": {
-      "tags": []
-    },
-    "ml-serving": {
-      "tags": []
-    },
-    "models": {
-      "tags": []
-    },
-    "sensor-collector": {
-      "tags": []
+    "@nrwl/angular:component": {
+      "style": "scss"
     }
   }
 }

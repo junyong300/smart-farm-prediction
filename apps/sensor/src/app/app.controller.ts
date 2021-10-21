@@ -8,11 +8,6 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getData() {
-    return this.appService.getData();
-  }
-
   @MessagePattern('sensor')
   handleSensorData(@Payload() data: SensorRequest, @Ctx() context: RedisContext) {
     console.log(`channel: ${context.getChannel()}, data: ${data}`);
