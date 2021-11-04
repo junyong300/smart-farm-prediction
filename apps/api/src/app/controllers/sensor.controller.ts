@@ -19,7 +19,7 @@ export class SensorController {
     sensorData.idx = idx;
     sensorData.type = type;
     sensorData.data = body[Object.keys(body)[0]];
-    this.logger.debug(sensorData);
+    this.logger.debug(`${idx} ${type} ${JSON.stringify(body)}`);
     return this.redis.send('sensor', sensorData).pipe(timeout(3000));
   }
 }

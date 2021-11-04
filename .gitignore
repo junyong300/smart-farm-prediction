@@ -2,8 +2,10 @@
 
 # compiled output
 /dist
+/devenv
 /tmp
 /out-tsc
+__pycache__
 
 # dependencies
 /node_modules

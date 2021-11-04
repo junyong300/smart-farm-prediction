@@ -1,11 +1,11 @@
-import { Body, Controller, Get, Inject, Param, Post, Query, Res } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post, Query, Res } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices'
 import { timeout } from 'rxjs/operators';
-import { getLogger } from "log4js";
 import { Logger } from "@nestjs/common";
 
-import { AppService } from './app.service';
+//import { AppService } from './app.service';
 import * as path from 'path';
+import { ApiQuery } from '@nestjs/swagger';
 
 @Controller()
 export class AppController {
@@ -19,14 +19,16 @@ export class AppController {
     response.sendFile(path.resolve(path.join(__dirname, '..', 'frontend/edge-mon/index.html')));
   }
 
+  @ApiQuery({name: 'data', required: true})
+  @ApiQuery({name: 'cmd', required: true})
   @Get('/api/cmd.json')
   getCmd(@Query() q) {
     this.logger.debug(q);
-    return this.redis.send(q['cmd'], q['data']).pipe(timeout(3000));
+    return this.redis.send(q['cmd'], q['data']).pipe(timeout(5000));
   }
 
   @Post('/api/cmd.json')
   postCmd(@Body() body) {
-    return this.redis.send(body['cmd'], body['data']).pipe(timeout(3000));
+    return this.redis.send(body['cmd'], body['data']).pipe(timeout(5000));
   }
 }

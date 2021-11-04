@@ -30,7 +30,7 @@ export class AppService {
         internal.sensingTime = cie.sensingDt;
         internal.sensingTime.setSeconds(0, 0);
         internal.temp = cie.temp;
-        internal.humidity = cie.temp;
+        internal.humidity = cie.humidity;
         internal.wetBulbTemp = cie.wetBulbTemp;
         internal.co2 = cie.co2;
         internal.solarRadiation = cie.solarRadiation;
