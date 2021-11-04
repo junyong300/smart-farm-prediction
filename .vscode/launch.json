@@ -11,15 +11,28 @@
       "type": "pwa-node",
       "request": "attach",
       "name": "Attach Nestjs Sensor-collector app",
-      "port": 9228,
-      //"preLaunchTask": "sensor-collector:serve"
+      "port": 9228
+    },
+    {
+      "name": "Python: Serving ML",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/apps/ml/main.py",
+      "console": "integratedTerminal",
+      "env": {
+        "PYTHONPATH": "$PYTHONPATH:${workspaceFolder}/apps/ml:${workspaceFolder}/apps"
+      }
     },
     {
       "name": "Python: Current File",
       "type": "python",
       "request": "launch",
       "program": "${file}",
-      "console": "integratedTerminal"
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/devenv",
+      "env": {
+        "PYTHONPATH": "$PYTHONPATH:${workspaceFolder}/apps/ml_center:${workspaceFolder}/apps"
+      }
     }
   ]
 }
