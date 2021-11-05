@@ -6,8 +6,10 @@
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main",
     "start": "nx serve",
+    "serve:ml": "cd devenv && PYTHONPATH=$PWD/../apps python ../apps/ml/main.py",
     "build": "nx build",
     "test": "nx test",
+    "devenv": "mkdir -p devenv && cp -nR ./resources/config devenv ",
     "copyresources": "cp -R ./resources/config ./resources/services dist/"
   },
   "private": true,
@@ -63,7 +65,6 @@
     "@nrwl/node": "13.0.1",
     "@nrwl/tao": "13.0.1",
     "@nrwl/workspace": "13.0.1",
-    "@nx-python/nx-python": "^1.0.3",
     "@types/jest": "27.0.2",
     "@types/node": "14.14.33",
     "@typescript-eslint/eslint-plugin": "4.31.2",
