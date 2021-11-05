@@ -16,7 +16,8 @@ import { FrontendMiddleware } from './middlewares/frontend.middleware';
       rootPath: join(__dirname, 'assets')
     }),
     */
-    CommonConfigModule
+    CommonConfigModule,
+    ConfigService
   ],
   controllers: [AppController, SensorController],
   providers: [AppService,

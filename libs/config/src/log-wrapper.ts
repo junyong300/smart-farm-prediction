@@ -1,13 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { LoggerService, LogLevel } from "@nestjs/common";
 import { configure, getLogger } from "log4js";
+import 'source-map-support/register';
 import * as path from 'path';
 
 export class LogWrapper implements LoggerService {
   private readonly logger = getLogger();
 
-  constructor(moduleName: string, level: string) {
+  constructor(moduleName: string) {
     this.logger.setParseCallStackFunction(this.parseCallStack);
+    const level = 'info';
     this.setLog4jOption(moduleName, level);
   }
 
@@ -28,6 +30,10 @@ export class LogWrapper implements LoggerService {
   }
   setLogLevels?(levels: LogLevel[]) {
     return;
+  }
+
+  setLogLevel(level: string) {
+    this.logger.level = level;
   }
 
   setLog4jOption(moduleName: string, level: string) {
