@@ -7,6 +7,7 @@ import { AppController } from './app.controller';
 import { SensorController } from './controllers/sensor.controller';
 import { ConfigService } from '@nestjs/config';
 import { FrontendMiddleware } from './middlewares/frontend.middleware';
+import { HttpModule } from '@nestjs/axios';
 //import { join } from 'path';
 
 @Module({
@@ -16,6 +17,7 @@ import { FrontendMiddleware } from './middlewares/frontend.middleware';
       rootPath: join(__dirname, 'assets')
     }),
     */
+    HttpModule,
     CommonConfigModule,
     ConfigService
   ],
