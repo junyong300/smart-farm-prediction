@@ -1,4 +1,4 @@
-import asyncio, async_timeout, aioredis
+import asyncio, aioredis
 from asyncio.exceptions import CancelledError
 from signal import SIGINT, SIGTERM, Signals
 import logging
@@ -11,17 +11,11 @@ logger = logging.getLogger(__name__)
 async def reader(channel: aioredis.client.PubSub, redis: aioredis.Redis):
     while True:
         try:
-            async with async_timeout.timeout(2):
-                msg = await channel.get_message(ignore_subscribe_messages=True)
-                if msg is not None:
-                    for key in msg:
-                        if (isinstance(msg[key], bytes)):
-                            msg[key] = msg[key].decode()
-
-                    logger.debug(f"(Reader) Message Received: {msg}")
-                    asyncio.ensure_future(router.route(redis, msg))
-                    logger.debug("proc end")
-
+            msg = await channel.get_message(ignore_subscribe_messages=True, timeout=0.1)
+            if msg is not None:
+                logger.debug(f"(Reader) Message Received: {msg}")
+                # TODO: multiprocessing
+                asyncio.create_task(router.route(redis, msg))
                 await asyncio.sleep(0.01)
         except asyncio.TimeoutError:
             pass
@@ -46,5 +40,7 @@ async def main():
 
     for signal in [SIGINT, SIGTERM]:
         loop.add_signal_handler(signal, interrupted, signal, task)
+    
+    await task
     
 asyncio.run(main())

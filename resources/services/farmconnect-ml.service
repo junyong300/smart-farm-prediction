@@ -1,0 +1,15 @@
+[Unit]
+Description=farmconnect-ml
+After=syslog.target network.target redis.service postgresql.service
+
+[Service]
+WorkingDirectory=/farmconnect
+
+ExecStart=python3 /farmconnect/ml/main.py
+ExecStop=/bin/kill -15 $MAINPID
+
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
