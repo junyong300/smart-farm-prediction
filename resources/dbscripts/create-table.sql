@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS Farm.Farm (
   CreatedTime timestamp with time zone default now(),
   ModifiedTime timestamp with time zone,
   DeletedTime timestamp with time zone,
-  primary key Id
+  primary key (Id)
 ) 
 
 CREATE TABLE IF NOT EXISTS Farm.Dong (
