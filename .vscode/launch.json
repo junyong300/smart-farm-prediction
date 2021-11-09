@@ -1,6 +1,7 @@
 {
   "version": "0.2.0",
   "configurations": [
+
     {
       "type": "pwa-node",
       "request": "attach",
@@ -12,6 +13,13 @@
       "request": "attach",
       "name": "Attach Nestjs Sensor-collector app",
       "port": 9228
+    },
+    {
+      "name": "Chrome - Edge-mon",
+      "request": "launch",
+      "type": "pwa-chrome",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}"
     },
     {
       "name": "Python: Serving ML",

@@ -1,24 +1,17 @@
-<mat-toolbar color='primary'>Edge Monitor</mat-toolbar>
+<mat-toolbar color='primary'>
+  Edge Monitor
+  <button color="accent" mat-raised-button (click)="sidenav.toggle()">SideNav Toggle</button>
+</mat-toolbar>
 
+<mat-sidenav-container class="container">
+  <mat-sidenav #sidenav mode="side" opened class="sidenav">
+    <a routerLink="/sensor" routerLinkActive="active">Internal Sensor</a>
+    <br>
+    <a routerLink="/predict" routerLinkActive="active">Predict</a>
+  </mat-sidenav>
 
-<table mat-table [dataSource]="dataSource" class="sensing-list">
-  <ng-container matColumnDef="sensingTime"> 
-    <th mat-header-cell *matHeaderCellDef>Sensing Time</th>
-    <td mat-cell *matCellDef="let element"> {{element.sensingTime|date:'y-MM-dd HH:mm'}} </td>
-  </ng-container>
-  <ng-container matColumnDef="temp"> 
-    <th mat-header-cell *matHeaderCellDef>Temp</th>
-    <td mat-cell *matCellDef="let element"> {{element.temp}} </td>
-  </ng-container>
-  <ng-container matColumnDef="humidity"> 
-    <th mat-header-cell *matHeaderCellDef>Humidity</th>
-    <td mat-cell *matCellDef="let element"> {{element.humidity}} </td>
-  </ng-container>
-  <ng-container matColumnDef="co2"> 
-    <th mat-header-cell *matHeaderCellDef>CO2</th>
-    <td mat-cell *matCellDef="let element"> {{element.co2}} </td>
-  </ng-container>
+  <mat-sidenav-content>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
