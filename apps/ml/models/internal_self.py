@@ -1,24 +1,21 @@
 import tensorflow as tf
 import pandas as pd
 import datetime
-
 from pandas.core.frame import DataFrame
-from ml_common.redis_message import ModelOption
-from models.base_model import BaseModel
-import ml_common.normalize as norm
 
-class InternalSelfModel(BaseModel):
-    def __init__(self):
-        super().__init__()
-    
-    def fetchDb(self, modelOption: ModelOption):
+from ml_common.redis_message import ModelOption
+import ml_common.normalize as norm
+from models.infer_model import InferModel
+
+class InternalSelfModel(InferModel):
+
+    async def fetchDb(self, dbConn, modelOption: ModelOption):
         deviceId = modelOption.deviceId
         if not deviceId:
-            deviceId = 2090099
+            deviceId = 2090098
 
         try:
             etime = modelOption.time
-            #etime = datetime.datetime.strptime(etime, '')
         except Exception:
             etime = datetime.datetime.now()
         
@@ -31,11 +28,13 @@ class InternalSelfModel(BaseModel):
             "and co2 between 0 and 5000 "
         )
         self.logger.debug(sql)
-        self.pgConn.execute(sql)
-        rs = self.pgConn.fetchall()
+        rs = await dbConn.fetch_all(sql)
         return rs
 
     def makeInput(self, rs):
+        if len(rs) == 0:
+            return None, None
+
         base = rs[len(rs) - 1]['sensingtime'].minute
 
         df = pd.DataFrame(rs)
@@ -52,15 +51,20 @@ class InternalSelfModel(BaseModel):
         input_tensor = tf.reshape(input_tensor, [-1, 288, 6])
         return input_tensor, df
 
-    def predict(self, model: tf.keras.Model, modelOption: ModelOption):
-        rs = self.fetchDb(modelOption)
+    async def predictFromDb(self, dbConn, modelOption: ModelOption):
+        rs = await self.fetchDb(dbConn, modelOption)
         input, df = self.makeInput(rs)
-        [pred] = model.predict(input)
+        if input is None:
+            return [], []
+
+        [pred] = self.model.predict(input)
         pred = [norm.t_denorm(x) for x in pred]
 
         df.insert(0, 'sensingTime', df.index)
-        df['sensingTime'] = df['sensingTime'].dt.strftime('%Y-%m-%d %H:%M:%S')
+        df['sensingTime'] = df['sensingTime'].dt.tz_convert('Asia/Seoul').dt.strftime('%Y-%m-%d %H:%M:%S')
+        df = df[['sensingTime', 'temp', 'co2']]
         input_list = df.values.tolist()
 
         self.logger.debug("predict done")
         return pred, input_list
+    

@@ -1,3 +1,6 @@
+import tensorflow as tf
+tf.config.set_visible_devices([], 'GPU')
+
 import asyncio, aioredis
 from asyncio.exceptions import CancelledError
 from signal import SIGINT, SIGTERM, Signals
@@ -15,7 +18,7 @@ async def reader(channel: aioredis.client.PubSub, redis: aioredis.Redis):
             if msg is not None:
                 logger.debug(f"(Reader) Message Received: {msg}")
                 # TODO: multiprocessing
-                asyncio.create_task(router.route(redis, msg))
+                asyncio.create_task(router.handler(redis, msg))
                 await asyncio.sleep(0.01)
         except asyncio.TimeoutError:
             pass

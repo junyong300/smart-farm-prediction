@@ -1,3 +1,3 @@
 from models.model_factory import create
-from models.base_model import BaseModel
+from models.train_model import TrainModel
 from models.internal_self import InternalSelfModel

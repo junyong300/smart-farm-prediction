@@ -6,17 +6,19 @@ from tqdm import tqdm
 
 import datetime
 import logging
+from databases import Database
 
 from tensorflow.python.data.ops.dataset_ops import Dataset
 
 import models
-from models.base_model import BaseModel
+from .train_model import TrainModel
 from ml_common.logger import setup
+from ml_common import ModelOption
 import ml_common.normalize as norm
 
 logger = logging.getLogger(__name__)
 
-class InternalSelfModel(BaseModel):
+class InternalSelfModel(TrainModel):
     #saved_model_path = './saved_model/sensing'
     '''
         predict 24 hours internal env from 48 hours internal env
@@ -64,7 +66,7 @@ class InternalSelfModel(BaseModel):
         trainset = trainset.shuffle(buffer_size=100000, reshuffle_each_iteration=True).batch(64)
         testset = testset.batch(64)
 
-        self.model.fit(trainset, epochs=2, validation_data=testset, callbacks=[self.tensorboard_callback])
+        self.model.fit(trainset, epochs=50, validation_data=testset, callbacks=[self.tensorboard_callback])
         #self.model.save(self.saved_model_path)
         self.saveModel()
         logger.info("inter model saved")
@@ -72,8 +74,8 @@ class InternalSelfModel(BaseModel):
     def predict(self, dataset:Dataset):
         return self.model.predict(dataset)
 
-    def makeDataset(self) -> Dataset:
-        rs = self.loadOrFetch()
+    async def makeDataset(self) -> Dataset:
+        rs = await self.loadOrFetch()
         logger.info("inter model recordset loaded")
         seqs = self.preprocess(rs)
         logger.info("inter model preprocessing done")
@@ -94,7 +96,7 @@ class InternalSelfModel(BaseModel):
 
         return dataset
 
-    def fetchTrainDb(self):
+    async def fetchDb(self, dbConn: Database, modelOption: ModelOption ):
         target_devices = ','.join(map(str, self.devices))
         #sql = ("select device_idx didx, sensing_dt sdt, sie_temp t, sie_humidity h, sie_co2 co2 from sdh_internal "
         sql = ("select device_idx didx, sensing_dt sdt, sie_temp t, sie_co2 co2 from sdh_internal "
@@ -106,8 +108,7 @@ class InternalSelfModel(BaseModel):
                 "order by didx, sdt"
         )
         logger.debug("sql:" + sql)
-        self.mysqlConn.execute(sql)
-        rs = self.mysqlConn.fetchall()
+        rs = await dbConn.fetch_all(sql)
         return rs
     
     def preprocess(self, rs):
@@ -119,7 +120,6 @@ class InternalSelfModel(BaseModel):
         seq = []
         seqs = []
 
-        #if not isinstance(rs, list):
         if isinstance(rs, DataFrame):
             rs = rs.to_dict('records')
 
@@ -187,10 +187,4 @@ class InternalSelfModel(BaseModel):
             seq.append(rt)
 
         return seq
-
-if __name__ == '__main__':
-    setup("ml.log", logging.DEBUG)
-    model = models.create("internal", "self")
-    dataset = model.makeDataset()
-    model.train(dataset)
 

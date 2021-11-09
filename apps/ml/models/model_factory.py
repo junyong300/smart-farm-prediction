@@ -1,8 +1,8 @@
 from typing import Union
-from models.base_model import BaseModel
+from models.infer_model import InferModel
 from models.internal_self import InternalSelfModel
 
-def create(modelName: str) -> Union[BaseModel, InternalSelfModel]:
+def create(modelName: str, kerasModel) -> Union[InferModel, InternalSelfModel]:
     className = modelName + "Model"
     model = globals()[className]
-    return model()
+    return model(kerasModel)

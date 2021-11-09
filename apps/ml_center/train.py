@@ -1,8 +1,12 @@
+from ml_common import setup
 import models
-from ml_common.logger import setup
+import asyncio
 
-setup("ml.log")
+setup("ml_center.log")
 
-model = models.create("InternalSelf")
-ds = model.makeDataset()
-model.train(ds)
+async def main():
+    model = models.create("InternalSelf")
+    ds = await model.makeDataset()
+    model.train(ds)
+
+asyncio.run(main())

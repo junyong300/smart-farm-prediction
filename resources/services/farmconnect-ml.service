@@ -5,8 +5,9 @@ After=syslog.target network.target redis.service postgresql.service
 [Service]
 WorkingDirectory=/farmconnect
 
-ExecStart=python3 /farmconnect/ml/main.py
+ExecStart=/farmconnect/venv/bin/python /farmconnect/ml/main.py
 ExecStop=/bin/kill -15 $MAINPID
+Environment="PYTHONPATH=/farmconnect"
 
 RestartSec=10
 Restart=always
