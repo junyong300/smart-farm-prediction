@@ -16,11 +16,11 @@
     "strictPropertyInitialization": false,
     "baseUrl": ".",
     "paths": {
-      "@lib/config": ["libs/config/src/index.ts"],
-      "@lib/db": ["libs/db/src/index.ts"],
-      "@lib/db/*": ["libs/db/src/*"],
-      "@lib/models": ["libs/models/src/index.ts"],
-      "@lib/models/*": ["libs/models/src/*/index.ts"]
+      "@libs/config": ["libs/config/src/index.ts"],
+      "@libs/db": ["libs/db/src/index.ts"],
+      "@libs/db/*": ["libs/db/src/*"],
+      "@libs/models": ["libs/models/src/index.ts"],
+      "@libs/models/*": ["libs/models/src/*/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

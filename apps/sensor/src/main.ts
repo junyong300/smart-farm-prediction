@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { Transport } from '@nestjs/microservices';
-import { LogWrapper } from '@lib/config';
+import { LogWrapper } from '@libs/config';
 import { AppModule } from './app/app.module';
 
 async function bootstrap() {

@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CommonConfigModule } from '@lib/config';
+import { CommonConfigModule } from '@libs/config';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';

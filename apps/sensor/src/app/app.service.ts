@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Internal } from '@lib/db/env';
-import { Device } from '@lib/db/device';
-import { CreateInternalEnvDto, SensorRequest } from '@lib/models/sensor';
+import { Internal } from '@libs/db/env';
+import { Device } from '@libs/db/device';
+import { CreateInternalEnvDto, SensorRequest } from '@libs/models/sensor';
 import { plainToClass } from 'class-transformer';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';

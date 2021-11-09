@@ -1,7 +1,7 @@
 import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
 import { ClientProxyFactory, Transport } from '@nestjs/microservices';
 // import { ServeStaticModule } from '@nestjs/serve-static';
-import { CommonConfigModule } from '@lib/config';
+import { CommonConfigModule } from '@libs/config';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { SensorController } from './controllers/sensor.controller';

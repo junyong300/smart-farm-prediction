@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from './services/http.service';
-import { InternalDto } from '@lib/models/sensor';
+import { InternalDto } from '@libs/models/sensor';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({

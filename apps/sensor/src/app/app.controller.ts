@@ -1,6 +1,6 @@
 import { Controller, Get, Logger } from '@nestjs/common';
 import { Ctx, MessagePattern, Payload, RedisContext } from '@nestjs/microservices';
-import { SensorRequest } from '@lib/models/sensor';
+import { SensorRequest } from '@libs/models/sensor';
 
 import { AppService } from './app.service';
 

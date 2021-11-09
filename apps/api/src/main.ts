@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 //import { WsAdapter } from '@nestjs/platform-ws';
 import { SwaggerModule, DocumentBuilder} from '@nestjs/swagger';
-import { LogWrapper } from '@lib/config';
+import { LogWrapper } from '@libs/config';
 
 import { AppModule } from './app/app.module';
 

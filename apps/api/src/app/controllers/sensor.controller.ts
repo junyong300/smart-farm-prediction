@@ -3,7 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { timeout } from 'rxjs/operators';
 import { HttpService } from '@nestjs/axios';
 
-import { SensorRequest } from '@lib/models/sensor';
+import { SensorRequest } from '@libs/models/sensor';
 import { getLogger } from "log4js";
 import { ConfigService } from '@nestjs/config';
 
