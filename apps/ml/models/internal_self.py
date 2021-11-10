@@ -15,7 +15,7 @@ class InternalSelfModel(InferModel):
             deviceId = 2090098
 
         try:
-            etime = modelOption.time
+            etime = modelOption.getBaseTimeByDatetime()
         except Exception:
             etime = datetime.datetime.now()
         

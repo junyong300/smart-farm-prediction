@@ -9,7 +9,7 @@ export class HttpService {
 
   constructor(private http: HttpClient) { }
 
-  get<T>(cmd: string, params: unknown): Observable<T> {
+  get<T>(cmd: string, params: unknown = {}): Observable<T> {
     const url = "/api/cmd.json";
     //const url = "192.168.0.229:8080/api/request.json";
     let httpParams = new HttpParams();
