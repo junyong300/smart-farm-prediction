@@ -14,7 +14,8 @@ async function bootstrap() {
   app.connectMicroservice({
     transport: Transport.REDIS,
     options: {
-        url: 'redis://' + configService.get<string>('REDIS_HOST', 'localhost') + ':' + configService.get<number>('REDIS_PORT', 6379)
+        url: 'redis://localhost:' + configService.get<number>('REDIS_PORT')
+        //url: 'redis://' + configService.get<string>('REDIS_HOST', 'localhost') + ':' + configService.get<number>('REDIS_PORT', 6379)
     }
   });
 

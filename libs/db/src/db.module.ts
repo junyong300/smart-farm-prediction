@@ -1,6 +1,6 @@
 import { Module, Global } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CommonConfigModule } from '@lib/config';
+import { CommonConfigModule } from '@libs/config';
 import { ConfigService } from '@nestjs/config';
 import { NamingStrategy } from './naming.strategy';
 import { DbService } from './db.service';

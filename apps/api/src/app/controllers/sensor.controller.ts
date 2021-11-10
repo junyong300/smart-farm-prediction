@@ -9,8 +9,12 @@ import { ConfigService } from '@nestjs/config';
 
 @Controller('connfarm/api/device')
 export class SensorController {
+  sendToSensor = false;
+
   private readonly logger = getLogger();
-  constructor(@Inject('REDIS') private redis: ClientProxy, private httpService: HttpService, private config: ConfigService) {}
+  constructor(@Inject('REDIS') private redis: ClientProxy, private httpService: HttpService, private config: ConfigService) {
+    this.sendToSensor = config.get<boolean>("API_SEND_SENSOR", false);
+  }
 
   /**
    * Sensing data from gateway
@@ -24,7 +28,7 @@ export class SensorController {
     this.logger.debug(`${idx} ${type} ${JSON.stringify(body)}`);
 
     // for development
-    if (this.config.get<boolean>("API_SEND_SENSOR", false)) {
+    if (this.sendToSensor) {
       this.logger.debug("send copied sensor data to edge")
       const url = `http://192.168.0.188:8080/connfarm/api/device/${idx}/sensor/${type}.json`;
       this.httpService.post(url, body).pipe(timeout(500)).subscribe();

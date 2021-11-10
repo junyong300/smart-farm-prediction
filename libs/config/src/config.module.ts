@@ -5,7 +5,9 @@ import * as path from 'path';
 const MODE = process.env.NODE_ENV;
 const PARAM_CONFIG_FILE = process.argv.slice(2)[0];
 const midDir = MODE?.startsWith('dev') ? '/devenv': '';
-const configFile = PARAM_CONFIG_FILE ? PARAM_CONFIG_FILE : path.join(process.cwd(), midDir, 'config', 'common.conf');
+const configFile = PARAM_CONFIG_FILE ? PARAM_CONFIG_FILE :
+  __dirname.includes('/dist/') ?  path.join(__dirname, "..", "..", "devenv", 'config', 'common.conf') :
+  path.join(__dirname, "..", 'config', 'common.conf');
 console.log("configFile: " + configFile);
 
 @Global()
