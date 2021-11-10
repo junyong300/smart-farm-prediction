@@ -11,7 +11,7 @@
     "test": "nx test",
     "devenv": "mkdir -p devenv && cp -nR ./resources/config devenv ",
     "copyresources": "cp -R ./resources/config ./resources/services dist/",
-    "copydist": "sudo cp -R ./dist/frontend/ ./dist/api/ ./dist/sensor/ ./apps/ml ./apps/ml_common/ ./apps/ml_center/ ./resources/* ./devenv/ml_models/ /farmconnect/"
+    "copydist": "sudo cp -R ./dist/frontend/ ./dist/api/ ./dist/sensor/ ./dist/farm/ ./apps/ml ./apps/ml_common/ ./apps/ml_center/ ./resources/* ./devenv/ml_models/ /farmconnect/"
   },
   "private": true,
   "dependencies": {

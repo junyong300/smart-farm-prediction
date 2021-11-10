@@ -156,7 +156,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "3mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -272,7 +272,7 @@
             "{options.outputPath}"
           ],
           "options": {
-            "outputPath": "dist/apps/farm",
+            "outputPath": "dist/farm",
             "main": "apps/farm/src/main.ts",
             "tsConfig": "apps/farm/tsconfig.app.json",
             "assets": [
