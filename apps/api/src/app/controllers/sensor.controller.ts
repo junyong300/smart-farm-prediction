@@ -13,7 +13,7 @@ export class SensorController {
 
   private readonly logger = getLogger();
   constructor(@Inject('REDIS') private redis: ClientProxy, private httpService: HttpService, private config: ConfigService) {
-    this.sendToSensor = config.get<boolean>("API_SEND_SENSOR", false);
+    this.sendToSensor = config.get("API_SEND_SENSOR", false) == 'true';
   }
 
   /**
