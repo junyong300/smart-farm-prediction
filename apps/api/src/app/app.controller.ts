@@ -24,11 +24,13 @@ export class AppController {
   @Get('/api/cmd.json')
   getCmd(@Query() q) {
     this.logger.debug(q);
-    return this.redis.send(q['cmd'], q['data']).pipe(timeout(5000));
+    const data = q['data'] ? q['data'] : '';
+    return this.redis.send(q['cmd'], data).pipe(timeout(5000));
   }
 
   @Post('/api/cmd.json')
   postCmd(@Body() body) {
-    return this.redis.send(body['cmd'], body['data']).pipe(timeout(5000));
+    const data = body['data'] ? body['data'] : '';
+    return this.redis.send(body['cmd'], data).pipe(timeout(5000));
   }
 }
