@@ -28,7 +28,9 @@ export class PredictComponent implements OnInit, AfterViewInit {
   constructor(private zone: NgZone, private http: HttpService) {}
 
   ngOnInit() {
-    const dt = new Date().toISOString().split('T')
+    const now = new Date();
+    const offsetMs = now.getTimezoneOffset() * 60 * 1000;
+    const dt = new Date(now.getTime() - offsetMs).toISOString().split('T');
     this.baseTime = dt[0] + " " + dt[1].substr(0, 5);
     this.http
       .get<SimpleDeviceDto[]>('getSimpleDeviceList')
