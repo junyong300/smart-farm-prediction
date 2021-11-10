@@ -1,0 +1,15 @@
+[Unit]
+Description=farmconnect-farm
+After=syslog.target network.target redis.service postgresql.service
+
+[Service]
+WorkingDirectory=/farmconnect/farm
+
+ExecStart=/bin/node /farmconnect/farm/main.js
+ExecStop=/bin/kill -15 $MAINPID
+
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
