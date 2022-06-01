@@ -2,6 +2,7 @@
   "version": 1,
   "projects": {
     "api": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/api",
       "sourceRoot": "apps/api/src",
       "projectType": "application",
@@ -55,6 +56,7 @@
       "tags": []
     },
     "config": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "libs/config",
       "sourceRoot": "libs/config/src",
       "projectType": "library",
@@ -78,6 +80,7 @@
       "tags": []
     },
     "db": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "libs/db",
       "sourceRoot": "libs/db/src",
       "projectType": "library",
@@ -101,6 +104,7 @@
       "tags": []
     },
     "edge-mon": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "projectType": "application",
       "root": "apps/edge-mon",
       "sourceRoot": "apps/edge-mon/src",
@@ -199,6 +203,7 @@
       "tags": []
     },
     "edge-mon-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/edge-mon-e2e",
       "sourceRoot": "apps/edge-mon-e2e/src",
       "projectType": "application",
@@ -228,6 +233,7 @@
       "implicitDependencies": ["edge-mon"]
     },
     "farm": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/farm",
       "sourceRoot": "apps/farm/src",
       "projectType": "application",
@@ -280,6 +286,7 @@
       "tags": []
     },
     "models": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "libs/models",
       "sourceRoot": "libs/models/src",
       "projectType": "library",
@@ -303,6 +310,7 @@
       "tags": []
     },
     "sensor": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "root": "apps/sensor",
       "sourceRoot": "apps/sensor/src",
       "projectType": "application",
