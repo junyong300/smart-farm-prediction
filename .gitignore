@@ -8,7 +8,8 @@
 __pycache__
 
 # dependencies
-/node_modules
+node_modules/
+package-lock.json
 
 # IDEs and editors
 /.idea
@@ -27,7 +28,7 @@ __pycache__
 !.vscode/extensions.json
 
 # misc
-/.angular/cache
+/.angular
 /.sass-cache
 /connect.lock
 /coverage
@@ -42,4 +43,6 @@ testem.log
 .DS_Store
 Thumbs.db
 
+nohup.out
 
+.angular
