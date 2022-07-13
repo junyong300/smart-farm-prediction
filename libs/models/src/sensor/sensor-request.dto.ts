@@ -1,8 +1,13 @@
-import { CreateExternalEnvDto } from ".";
-import { CreateInternalEnvDto } from "./create-internalEnv.dto";
+import { CreateInternalEnvOldDto, CreateCultureMediumOldDto, CreateExternalEnvOldDto } from ".";
 
 export class SensorRequest {
   idx: string;
   type: string;
-  data: CreateInternalEnvDto | CreateExternalEnvDto;
+  body: {
+    internalEnv?: CreateInternalEnvOldDto;
+    externalEnv?: CreateExternalEnvOldDto;
+    cultureMedium?: CreateCultureMediumOldDto;
+    serialNumber?: string;
+    use_serial_number?: boolean;
+  } = {};
 }
