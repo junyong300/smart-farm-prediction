@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "pwa-node",
+      "type": "node",
       "name": "Launch Api App",
       "request": "launch",
       "runtimeArgs": [ "run-script", "start", "api" ],
@@ -11,42 +11,47 @@
       "console": "integratedTerminal"
     },
     {
-      "type": "pwa-node",
-      "name": "Launch Farm App",
+      "type": "node",
+      "name": "Launch SensorProcessor App",
       "request": "launch",
-      "runtimeArgs": [ "run-script", "start", "farm" ],
+      "runtimeArgs": [ "run-script", "start", "sensor-processor" ],
       "runtimeExecutable": "npm",
       "skipFiles": [ "<node_internals>/**" ],
       "console": "integratedTerminal"
     },
     {
-      "type": "pwa-node",
-      "request": "attach",
-      "name": "Attach Nestjs Api app",
-      "port": 9229
-    },
-    {
-      "type": "pwa-node",
-      "request": "attach",
-      "name": "Attach Nestjs Sensor-collector app",
-      "port": 9228
-    },
-    {
-      "name": "Chrome - Edge-mon",
+      "name": "Launch AI App",
+      "type": "node",
       "request": "launch",
-      "type": "pwa-chrome",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [ "run-script", "start", "ai" ],
+      "skipFiles": [ "<node_internals>/**" ],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Chrome",
+      "request": "launch",
+      "type": "chrome",
       "url": "http://localhost:4200",
       "webRoot": "${workspaceFolder}"
     },
     {
-      "name": "Python: Serving ML",
+      "name": "Python: AI Train",
       "type": "python",
       "request": "launch",
-      "program": "${workspaceFolder}/apps/ml/main.py",
+      "program": "${workspaceFolder}/apps/ai_train/main.py",
+      "args": ["internal-basic-1"],
       "console": "integratedTerminal",
-      "env": {
-        "PYTHONPATH": "$PYTHONPATH:${workspaceFolder}/apps/ml:${workspaceFolder}/apps"
-      }
+      "cwd": "${workspaceFolder}/devenv"
+    },
+    {
+      "name": "Python: AI Train - Test",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/apps/ai_train/main.py",
+      "args": ["external-wfs-test-1"],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/devenv"
     },
     {
       "name": "Python: Current File",
@@ -54,10 +59,31 @@
       "request": "launch",
       "program": "${file}",
       "console": "integratedTerminal",
-      "cwd": "${workspaceFolder}/devenv",
-      "env": {
-        "PYTHONPATH": "$PYTHONPATH:${workspaceFolder}/apps/ml_center:${workspaceFolder}/apps"
-      }
+      "cwd": "${workspaceFolder}/devenv"
+    },
+    {
+      "name": "Pyspark: Current File",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "args": ["--packages", "mysql:mysql-connector-java:8.0.27"],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/devenv"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Jest watch current file",
+      "program": "${workspaceFolder}/node_modules/jest/bin/jest",
+      "args": [
+        "${fileBasename}",
+        "--verbose",
+        "-i",
+        "--no-cache",
+        "--watchAll"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
     }
   ]
 }
