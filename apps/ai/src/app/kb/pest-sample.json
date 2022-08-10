@@ -1,0 +1,11 @@
+{
+  "crop": 1,
+  "period": 14,
+  "conditions": [
+    {"type": "date", "from": "03-01", "to": "06-01", "score": 5},
+    {"type": "date", "from": "09-01", "to": "11-01", "score": 4},
+    {"type": "internal", "field": "dryBulbTemp", "from": 20, "to": 25, "score": 5},
+    {"type": "internal", "field": "humidity", "aggr": "avg", "from": 0, "to": 60, "score": 5},
+    {"type": "internal", "field": "humidity", "aggr": "avg", "from": 0, "to": 60, "score": 5}
+  ]
+}
