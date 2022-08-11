@@ -17,7 +17,7 @@ export class SensorService {
     await this.sensorQueue.add({originalUrl, headers, body});
     const oldNew = isNew ? "New" : "Old";
     const url = isNew ? "" : originalUrl;
-    Logger.debug(`Added to queue(${oldNew}):${req.realIp} ${url} ${JSON.stringify(body)}`);
+    Logger.debug(`Added to queue(${oldNew}):${req.ip} ${url} ${JSON.stringify(body)}`);
 
     return 'success';
   }
