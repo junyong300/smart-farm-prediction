@@ -10,7 +10,6 @@
     "edge-mon": "apps/edge-mon",
     "edge-mon-e2e": "apps/edge-mon-e2e",
     "models": "libs/models",
-    "sensor-generator": "apps/sensor-generator",
     "sensor-processor": "apps/sensor-processor",
     "utils": "libs/utils"
   }
