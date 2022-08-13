@@ -11,6 +11,6 @@ export class SensorFactory {
       return SensorV1.create(data);
     }
 
-    throw new Error('Invalid sensor.');
+    throw new Error('Invalid sensor. No matching format.');
   }
 }
