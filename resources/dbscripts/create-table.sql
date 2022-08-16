@@ -1,89 +1,153 @@
-create database farmconnect;
 
-CREATE SCHEMA IF NOT EXISTS farm;
-CREATE SCHEMA IF NOT EXISTS device;
-CREATE SCHEMA IF NOT EXISTS env;
-CREATE SCHEMA IF NOT EXISTS common;
+CREATE TABLE `forward` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `host` varchar(50) NOT NULL,
+  `serials` varchar(30) NOT NULL,
+  `protocolVer` varchar(10) DEFAULT NULL,
+  `enabled` bit(1) NOT NULL DEFAULT b'1',
+  `description` varchar(255) DEFAULT NULL,
+  `create_dt` datetime DEFAULT current_timestamp(),
+  `modify_dt` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS Common.Config (
-  key varchar(50),
-  value varchar(50)
-)
+CREATE TABLE `device` (
+  `DEVICE_IDX` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `DEVICE_COMM_ERROR_FLAG` tinyint(1) NOT NULL,
+  `DEVICE_COMM_CD` tinyint(3) unsigned NOT NULL,
+  `DEVICE_COMM_VALUE` varchar(255) DEFAULT NULL,
+  `DEVICE_FIRST_REPORT_DT` datetime(6) DEFAULT NULL,
+  `DEVICE_LAST_REPORT_DT` datetime(6) DEFAULT NULL,
+  `MODEL_CD` mediumint(8) unsigned NOT NULL,
+  `DEVICE_REPORT_PERIOD` int(11) DEFAULT NULL,
+  `DEVICE_SERIAL_NUMBER` varchar(50) NOT NULL,
+  `FORMAT_IDX` int(5) unsigned DEFAULT 0,
+  `USE_FLAG` bit(1) NOT NULL,
+  `USE_FARM_DONG_IDX` bigint(20) DEFAULT NULL,
+  `USE_USER_IDX` int(10) unsigned DEFAULT NULL,
+  `ACTIVE` bit(1) DEFAULT NULL,
+  `CREATE_DT` datetime(6) NOT NULL,
+  `MODIFY_DT` datetime(6) DEFAULT NULL,
+  `USE_REG_DT` datetime(6) DEFAULT NULL,
+  `DELETE_DT` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`DEVICE_IDX`),
+  KEY `FKm8w5rp8hbman4dy11ojsgw0vr` (`MODEL_CD`),
+  KEY `FKt3vrljd1r56v5u60yrahtoo6b` (`USE_USER_IDX`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS Farm.Farm (
-  Id smallint,
-  Name varchar(50),
-  Address varchar(255),
-  SidoCd varchar(5),    -- 시도
-  SggCd varchar(5),     -- 시군구
-  EmdCd varchar(5),     -- 읍면동
-  Latitude float,
-  Longitude float,
-  area float,            -- 면적 m^2
-  Equipments varchar(1000),
-  CreatedTime timestamp with time zone default now(),
-  ModifiedTime timestamp with time zone,
-  DeletedTime timestamp with time zone,
-  primary key (Id)
-) 
+CREATE TABLE `farm` (
+  `FARM_IDX` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `FARM_ADDRESS` varchar(255) DEFAULT NULL,
+  `CREATE_DT` datetime(6) DEFAULT NULL,
+  `DELETE_DT` datetime(6) DEFAULT NULL,
+  `FARM_DONG_COUNT` tinyint(4) NOT NULL,
+  `FARM_DONG_TYPE` varchar(255) NOT NULL,
+  `FARM_EMD_CD` varchar(5) NOT NULL,
+  `EQUIPMENT_CODES` varchar(1024) DEFAULT NULL,
+  `FARM_LATITUDE` double NOT NULL,
+  `FARM_LONGITUDE` double NOT NULL,
+  `FARM_NAME` varchar(20) DEFAULT NULL,
+  `FARM_PYUNG` double NOT NULL,
+  `FARM_SGG_CD` varchar(5) NOT NULL,
+  `FARM_SIDO_CD` varchar(5) NOT NULL,
+  `FARM_SQM` double NOT NULL,
+  `MODIFY_DT` datetime(6) DEFAULT NULL,
+  `UI_MAIN_DONG_IDX` bigint(20) NOT NULL,
+  PRIMARY KEY (`FARM_IDX`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS Farm.Dong (
-  DongId smallint,
-  FarmId smallint,
-  IntDevId smallint,
-  extDevId smallint,
-  CulDevId smallint,
-  NutDevId smallint,
-  SoilDevId smallint,
-  isMain  boolean,
-  CreatedTime timestamp with time zone default now(),
-  ModifiedTime timestamp with time zone,
-  DeletedTime timestamp with time zone
-)
+CREATE TABLE `farm_dong` (
+  `FARM_DONG_IDX` bigint(20) NOT NULL AUTO_INCREMENT,
+  `ACTIVE` bit(1) DEFAULT NULL,
+  `CREATE_DT` datetime(6) NOT NULL,
+  `CULTURE_MEDIUM_DEVICE_IDX` mediumint(8) unsigned DEFAULT NULL,
+  `DELETE_DT` datetime(6) DEFAULT NULL,
+  `EXT_WEATHER_DEVICE_IDX` mediumint(8) unsigned DEFAULT NULL,
+  `FARM_IDX` int(10) unsigned NOT NULL,
+  `IN_ENV_DEVICE_IDX` mediumint(8) unsigned DEFAULT NULL,
+  `MAIN_DONG_FLAG` bit(1) DEFAULT NULL,
+  `FARM_DONG_NO` tinyint(3) unsigned NOT NULL,
+  `NUTRIENT_SOLUTION_DEVICE_IDX` mediumint(8) unsigned DEFAULT NULL,
+  `SOIL_DEVICE_IDX` mediumint(8) unsigned DEFAULT NULL,
+  `MODIFY_DT` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`FARM_DONG_IDX`),
+  UNIQUE KEY `UK48vqwhn05ifp0dc56746d6hpn` (`FARM_IDX`,`FARM_DONG_NO`),
+  KEY `FK62eilya4d0u7evr36mxtbudj8` (`CULTURE_MEDIUM_DEVICE_IDX`),
+  KEY `FK7hriq375clgamsnlx487ajsb1` (`EXT_WEATHER_DEVICE_IDX`),
+  KEY `FKp8aaigq1sc5m4eqstr7s085o7` (`IN_ENV_DEVICE_IDX`),
+  KEY `FK1ygkj955qjfuj3wi8xfrwgl0a` (`NUTRIENT_SOLUTION_DEVICE_IDX`),
+  KEY `FKqjb0ns40kmkl6v6ocy2ksdgx9` (`SOIL_DEVICE_IDX`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS Device.Device (
-  Id integer, -- (10~99)(0~9)(0000~9999)
-  FarmId integer,
-  DongId smallint,
-  CommType smallint default 1,
-  ModelId smallint,
-  Serial varchar(50),
-  FormatId smallint,
-  SensingInterval smallint default 1,
-  State smallint default 0,
-  FirstActiveTime timestamp with time zone,
-  LastActiveTime timestamp with time zone,
-  CreatedTime timestamp with time zone default now(),
-  ModifiedTime timestamp with time zone,
-  DeletedTime timestamp with time zone,
-  primary key (Id)
-)
--- COMMENT ON COLUMN Device.Device.Id IS 'Device Id';
--- COMMENT ON COLUMN Device.Device.DongId IS 'Dong Id on Farm.Dong table';
+CREATE TABLE `sdh_external` (
+  `IDX` bigint(20) NOT NULL AUTO_INCREMENT,
+  `DEVICE_IDX` bigint(20) NOT NULL,
+  `DAYKEY` int(11) NOT NULL,
+  `SENSING_DT` datetime DEFAULT sysdate(),
+  `CREATE_DT` datetime NOT NULL DEFAULT sysdate(),
+  `SEWS_TEMP` double DEFAULT NULL,
+  `SEWS_HUMIDITY` double DEFAULT 0,
+  `SEWS_WIND_DIRECTION` varchar(255) DEFAULT NULL,
+  `SEWS_WIND_SPEED` double(10,2) DEFAULT NULL,
+  `SEWS_SOLAR_RADIATION` double DEFAULT NULL,
+  `SEWS_RAINFALL` double DEFAULT NULL,
+  `SEWS_RAIN_FLAG` tinyint(4) DEFAULT NULL,
+  `SEWS_LIGHTNESS` double DEFAULT NULL,
+  PRIMARY KEY (`IDX`),
+  KEY `SENSING_DT` (`SENSING_DT`),
+  KEY `DAYKEY` (`DAYKEY`),
+  KEY `DEVICE_IDX` (`DEVICE_IDX`),
+  KEY `idx1_sdh_external` (`DAYKEY`,`DEVICE_IDX`),
+  KEY `idx1_sdh_culture_medium` (`DAYKEY`,`DEVICE_IDX`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS Env.External (
-  DeviceId integer,
-  SensingTime timestamp with time zone, -- cut seconds
-  Temp float,
-  Humidity float,
-  SolarRadiation float,
-  WindSpeed float,
-  WindDirection float,
-  Rainfall float,
-  primary key (DeviceId, SensingTime)
-)
+CREATE TABLE `sdh_internal` (
+  `IDX` bigint(20) NOT NULL AUTO_INCREMENT,
+  `DEVICE_IDX` bigint(20) NOT NULL,
+  `DAYKEY` int(11) NOT NULL,
+  `SENSING_DT` datetime NOT NULL DEFAULT sysdate(),
+  `CREATE_DT` datetime NOT NULL DEFAULT sysdate(),
+  `SIE_TEMP` double DEFAULT NULL,
+  `SIE_HUMIDITY` double DEFAULT 0,
+  `SIE_WET_BULB_TEMP` double DEFAULT NULL,
+  `SIE_CO2` double DEFAULT 0,
+  `SIE_LIGHTNESS` double DEFAULT NULL,
+  `SIE_SOLAR_RADIANTION` double DEFAULT NULL,
+  `SIE_ILLUMINANCE` double DEFAULT NULL,
+  `SIE_DEW_POINT_TEMP` double DEFAULT NULL,
+  `SIE_HD` double DEFAULT NULL,
+  `SIE_HD_LEVEL` int(11) DEFAULT NULL,
+  `SIE_CM_TEMP` int(11) DEFAULT NULL,
+  `SIE_ABS_WATER` int(11) DEFAULT NULL,
+  `SIE_AM_PM_TYPE` varchar(255) DEFAULT NULL,
+  `SIE_SUNRISE_SUNSET_FLAG` tinyint(4) DEFAULT NULL,
+  `TIME_DIFF` int(11) DEFAULT NULL,
+  `SIE_CM_HUMIDITY` int(11) DEFAULT NULL,
+  `SIE_ENTHALPY` float DEFAULT NULL,
+  PRIMARY KEY (`IDX`),
+  KEY `DAYKEY` (`DAYKEY`),
+  KEY `DEVICE_IDX` (`DEVICE_IDX`),
+  KEY `SENSING_DT` (`SENSING_DT`),
+  KEY `idx1_sdh_internal` (`SENSING_DT`,`DEVICE_IDX`),
+  KEY `idx2_sdh_internal` (`DAYKEY`,`DEVICE_IDX`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS Env.Internal (
-  DeviceId integer,
-  SensingTime timestamp with time zone, -- cut seconds
-  Temp float,
-  Humidity float,
-  WetBulbTemp float,
-  CO2 float,
-  DewPointTemp float,
-  HD float,
-  SolarRadiation float,
-  --RootTemp float,
-  --RootHumidity float,
-  primary key (DeviceId, SensingTime)
-)
+CREATE TABLE `sdh_nutrient` (
+  `IDX` bigint(20) NOT NULL AUTO_INCREMENT,
+  `DEVICE_IDX` bigint(20) NOT NULL,
+  `DAYKEY` int(11) NOT NULL,
+  `SENSING_DT` datetime NOT NULL DEFAULT sysdate(),
+  `CREATE_DT` datetime NOT NULL DEFAULT sysdate(),
+  `SNS_WATERING` double DEFAULT NULL,
+  `SNS_WATERING_EC` double DEFAULT NULL,
+  `SNS_WATERING_PH` double DEFAULT NULL,
+  `SNS_DRAINAGE` double DEFAULT NULL,
+  `SNS_DRAINAGE_EC` double DEFAULT NULL,
+  `SNS_DRAINAGE_PH` double DEFAULT NULL,
+  `TIME_DIFF` int(11) DEFAULT NULL,
+  `SNS_HD_LEVEL` int(11) DEFAULT NULL,
+  `SNS_DAY_NO` int(11) DEFAULT NULL,
+  `SNS_AM_PM_TYPE` varchar(255) DEFAULT NULL,
+  `SNS_SUNRISE_SUNSET_FLAG` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`IDX`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

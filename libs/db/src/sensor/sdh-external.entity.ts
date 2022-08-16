@@ -3,22 +3,22 @@ import { SdhBase } from './sdh-base.entity';
 
 @Entity({ name: 'sdh_external' })
 export class SdhExternal extends SdhBase {
-  @Column({ name: 'SEWS_TEMP', type: 'double', comment: '온도(건구)' })
+  @Column({ name: 'SEWS_TEMP', type: 'double' })
   temp?: number;
-  @Column({ name: 'SEWS_HUMIDITY', type: 'double', comment: '습도' })
+  @Column({ name: 'SEWS_HUMIDITY', type: 'double' })
   humidity?: number;
-  @Column({ name: 'SEWS_WIND_DIRECTION', comment: '풍향' })
+  @Column({ name: 'SEWS_WIND_DIRECTION' })
   windDirection?: string;
-  @Column({ name: 'SEWS_WIND_SPEED', type: 'double', comment: '풍속' })
+  @Column({ name: 'SEWS_WIND_SPEED', type: 'double' })
   windSpeed?: number;
-  @Column({ name: 'SEWS_SOLAR_RADIATION', type: 'double', comment: '일사' })
+  @Column({ name: 'SEWS_SOLAR_RADIATION', type: 'double' })
   solarRadiation?: number;
-  @Column({ name: 'SEWS_LIGHTNESS', type: 'double', comment: '광량'})
+  @Column({ name: 'SEWS_LIGHTNESS', type: 'double' })
   lightness?: number;
 
-  @Column({ name: 'SEWS_RAINFALL', type: 'double', comment: '강우량' })
+  @Column({ name: 'SEWS_RAINFALL', type: 'double' })
   rainFall?: number;
-  @Column({ name: 'SEWS_RAIN_FLAG', comment: '감우' })
+  @Column({ name: 'SEWS_RAIN_FLAG' })
   rain?: boolean;
 
   fill() {
@@ -29,7 +29,7 @@ export class SdhExternal extends SdhBase {
     if (this.temp == null) return false;
     if (this.temp > 80 || this.temp < -50) return false;
     if (this.humidity != null && (this.humidity > 100 || this.humidity < 0)) return false;
-    if (this.temp == 0 && this.humidity == 0) return false; // 둘 다 0이면 잘못된 것으로 간주
+    if (this.temp == 0 && this.humidity == 0) return false;
 
     return true;
   }

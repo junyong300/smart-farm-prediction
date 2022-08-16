@@ -1,17 +1,17 @@
 import { PrimaryGeneratedColumn, Column, BeforeInsert, CreateDateColumn } from 'typeorm';
 
 export abstract class SdhBase {
-  @PrimaryGeneratedColumn({ name: 'IDX', type: 'bigint', comment: '일련번호' })
+  @PrimaryGeneratedColumn({ name: 'IDX', type: 'bigint', comment: 'serial' })
   idx?: number;
 
-  @Column({ name: 'DEVICE_IDX', type: 'bigint', width: 20, comment: '장치번호' })
+  @Column({ name: 'DEVICE_IDX', type: 'bigint', width: 20, comment: 'device index' })
   deviceIdx?: number;
 
-  @Column({ name: 'DAYKEY', comment: '날짜' })
+  @Column({ name: 'DAYKEY', comment: 'day key' })
   dayKey?: number;
-  @Column({ name: 'SENSING_DT', comment: '센싱날짜' })
+  @Column({ name: 'SENSING_DT', comment: 'sensing datetime' })
   sensingDt?: Date;
-  @CreateDateColumn({ name: 'CREATE_DT', comment: '생성날짜' })
+  @CreateDateColumn({ name: 'CREATE_DT' })
   createDt: Date;
 
   @BeforeInsert()
