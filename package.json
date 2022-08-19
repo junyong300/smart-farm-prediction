@@ -8,7 +8,7 @@
     "start": "nx serve",
     "serve:ml": "cd devenv && PYTHONPATH=$PWD/../apps python ../apps/ml/main.py",
     "build": "nx build",
-    "build:all": "nx build api --prod & nx build sensor-processor --prod & nx build sensor-generator --prod & nx build ai --prod & nx build edge-mon --prod",
+    "build:all": "nx build api --prod & nx build sensor-processor --prod & nx build ai --prod & nx build edge-mon --prod",
     "test": "nx test",
     "devenv": "mkdir -p devenv && cp -nR ./resources/config devenv ",
     "copyresources": "cp -R ./resources/config ./resources/services dist/",
