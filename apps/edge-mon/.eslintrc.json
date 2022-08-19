@@ -16,14 +16,6 @@
             "prefix": "smartFarmPrediction",
             "style": "camelCase"
           }
-        ],
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "type": "element",
-            "prefix": "smart-farm-prediction",
-            "style": "kebab-case"
-          }
         ]
       }
     },
