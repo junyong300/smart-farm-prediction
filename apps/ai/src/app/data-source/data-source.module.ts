@@ -1,14 +1,16 @@
-import { SdhCultureMedium, SdhExternal, SdhInternal } from '@libs/db/sensor';
 import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { SdhCultureMedium, SdhExternal, SdhInternal } from '@libs/db/sensor';
+import { typeormOptions } from '@libs/db'
 import { DbService } from './db.service';
 
 @Global()
 @Module({
   imports: [
-    TypeOrmModule.forFeature([SdhInternal, SdhExternal, SdhCultureMedium]),
+    TypeOrmModule.forRootAsync(typeormOptions),
+    TypeOrmModule.forFeature([SdhInternal, SdhExternal, SdhCultureMedium])
   ],
   providers: [DbService],
-  exports: [DbService]
+  exports: [DbService, TypeOrmModule]
 })
 export class DataSourceModule {}
