@@ -3,9 +3,9 @@ Description=farmconnect-sensor-processor
 After=syslog.target network.target redis.service
 
 [Service]
-WorkingDirectory=/farmconnect/sensor-processor
+WorkingDirectory=/data/farmconnect/sensor-processor
 
-ExecStart=/bin/node /farmconnect/sensor-processor/main.js
+ExecStart=/bin/node /data/farmconnect/sensor-processor/main.js
 ExecStop=/bin/kill -15 $MAINPID
 
 RestartSec=10

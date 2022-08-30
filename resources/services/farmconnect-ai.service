@@ -1,11 +1,11 @@
 [Unit]
-Description=farmconnect-api
+Description=farmconnect-ai
 After=syslog.target network.target redis.service
 
 [Service]
-WorkingDirectory=/data/farmconnect/api
+WorkingDirectory=/data/farmconnect/ai
 
-ExecStart=/bin/node /data/farmconnect/api/main.js
+ExecStart=/bin/node /data/farmconnect/ai/main.js
 ExecStop=/bin/kill -15 $MAINPID
 
 RestartSec=10
