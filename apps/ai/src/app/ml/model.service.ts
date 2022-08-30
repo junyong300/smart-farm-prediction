@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { RpcException } from "@nestjs/microservices";
-import * as tf from '@tensorflow/tfjs-node';
+import * as tf from '@tensorflow/tfjs-node-gpu';
 import { CommonConfigService } from "@libs/config";
 import { join } from "path";
 import { BaseModel } from "./models/base-model";
@@ -10,7 +10,7 @@ import { InternalBasic } from "./models/internal-basic";
 import { ExternalBasic } from "./models/external-basic";
 import { ExternalWfs } from "./models/external-wfs";
 import { CalcUtils, DateUtils } from "@libs/utils";
-import { TFSavedModel } from "@tensorflow/tfjs-node/dist/saved_model";
+import { TFSavedModel } from "@tensorflow/tfjs-node-gpu/dist/saved_model";
 
 @Injectable()
 export class ModelService {

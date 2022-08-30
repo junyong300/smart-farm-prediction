@@ -1,6 +1,6 @@
 import { PredictOptionsDto } from '@libs/models/ai';
 import { RpcException } from '@nestjs/microservices';
-import * as tf from '@tensorflow/tfjs-node';
+import * as tf from '@tensorflow/tfjs-node-gpu';
 import { TFSavedModel } from "@tensorflow/tfjs-node/dist/saved_model";
 import { DbService } from "../../data-source/db.service";
 
