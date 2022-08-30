@@ -4,7 +4,7 @@ Smart Farm Prediction is a system for sensing farm weather envirionment and pred
 # Prerequisites
 * Node.js - [Download & install](https://nodejs.org/ko/download/)
 * Python 3.8 or higher - [Download & install](https://www.python.org/downloads/)
-* Postgresql - [Download & install](https://www.postgresql.org/download/)
+* mariadb - [Download & install](https://mariadb.org/download)
 * Redis - [Download & install](https://redis.io/download)
 # Installing and building
 Install Dependencies
@@ -19,8 +19,8 @@ $ npm run build:all
 # Running Services
 ```bash
 $ node dist/api/main.js
-$ node dist/api/sensor.js
-$ python ml-serving/main.py
+$ node dist/sensor-processor/main.js
+$ node dist/ai/main.js
 ```
 
 Navigate to `http://localhost:8080/` for monitoring webapp.
