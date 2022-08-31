@@ -14,7 +14,15 @@
         "tsConfig": "apps/edge-mon/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": ["apps/edge-mon/src/favicon.ico", "apps/edge-mon/src/assets"],
-        "styles": ["apps/edge-mon/src/styles.scss"],
+        "stylePreprocessorOptions": {
+          "includePaths": ["libs/@fuse/styles"]
+        },
+        "styles": [
+          "libs/@fuse/styles/tailwind.scss",
+          "libs/@fuse/styles/themes.scss",
+          "libs/@fuse/styles/main.scss",
+          "apps/edge-mon/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
