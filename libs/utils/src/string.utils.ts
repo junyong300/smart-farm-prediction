@@ -19,6 +19,9 @@ export class StringUtils {
       // body is ignored by NestJS -> get raw body from request
       const raw = await rawbody(req);
       const text = raw.toString().trim();
+      if (text == '') {
+        return null;
+      }
       try {
         return JSON.parse(text);
       } catch (e) {
