@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import { start } from 'repl';
 import { getTimes } from './sunrise/sunrise';
 
 export enum AMPM_TYPE {
@@ -75,5 +76,22 @@ export class DateUtils {
       case "Moment":
       default: return DateUtils.toMoment(date);
     }
+  }
+
+  public static diff(startDate: moment.MomentInput, endDate: moment.MomentInput, unitOfTime: moment.unitOfTime.Diff = "days", precise?: boolean) {
+    return DateUtils.toMoment(endDate).diff(DateUtils.toMoment(startDate), unitOfTime, precise)
+  }
+
+  public static getDatesByRange(startDate: Date, endDate: Date = new Date()) {
+    const dates = [];
+
+    let date = new Date(startDate);
+
+    for (;date <= endDate;) {
+      dates.push(date);
+      date = DateUtils.add(date, 1, 'd').toDate();
+    }
+
+    return dates;
   }
 }
