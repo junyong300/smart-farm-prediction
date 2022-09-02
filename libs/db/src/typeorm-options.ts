@@ -35,5 +35,6 @@ export const typeormOptions: TypeOrmModuleAsyncOptions = {
 export const typeormCommonOptions: TypeOrmModuleAsyncOptions = {
   name: COMMON,
   useFactory: typeormFactory,
+  //dataSourceFactory: async (options) => {return await new DataSource(options).initialize()},
   inject: [CommonConfigService, {token: COMMON, optional: true}]
 };

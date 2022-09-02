@@ -19,7 +19,7 @@ export class Device {
   deleteDt?: Date;
 
   @Column({ name: 'DEVICE_SERIAL_NUMBER', comment: '' })
-  serialNumber?: string;
+  serial?: string;
 
   @Column({ name: 'DEVICE_COMM_CD', comment: ''})
   commType?: number;
