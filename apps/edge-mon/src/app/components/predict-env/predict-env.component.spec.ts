@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PredictComponent } from './predict.component';
+import { PredictEnvComponent } from './predict-env.component';
 
 describe('PredictComponent', () => {
-  let component: PredictComponent;
-  let fixture: ComponentFixture<PredictComponent>;
+  let component: PredictEnvComponent;
+  let fixture: ComponentFixture<PredictEnvComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PredictComponent ]
+      declarations: [ PredictEnvComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PredictComponent);
+    fixture = TestBed.createComponent(PredictEnvComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

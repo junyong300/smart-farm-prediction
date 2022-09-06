@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PredictComponent } from './components/predict/predict.component';
+import { PredictEnvComponent } from './components/predict-env/predict-env.component';
+import { PredictPestComponent } from './components/predict-pest/predict-pest.component';
 import { SensorComponent } from './components/sensor/sensor.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/sensor', pathMatch: 'full'},
   { path: 'sensor', component: SensorComponent },
-  { path: 'predict', component: PredictComponent },
+  { path: 'predict-env', component: PredictEnvComponent },
+  { path: 'predict-pest', component: PredictPestComponent },
 ];
 
 @NgModule({

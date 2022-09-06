@@ -12,16 +12,21 @@ import { MatInputModule } from '@angular/material/input';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 import { SensorComponent } from './components/sensor/sensor.component';
-import { PredictComponent } from './components/predict/predict.component';
+import { PredictEnvComponent } from './components/predict-env/predict-env.component';
+import { IconsModule } from './modules/icons/icons.module';
+import { PredictPestComponent } from './components/predict-pest/predict-pest.component';
 
 @NgModule({
-  declarations: [AppComponent, SensorComponent, PredictComponent],
+  declarations: [AppComponent, SensorComponent, PredictEnvComponent, PredictPestComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule, ReactiveFormsModule,
+    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     MatFormFieldModule,
     MatToolbarModule,
@@ -30,7 +35,10 @@ import { PredictComponent } from './components/predict/predict.component';
     MatButtonModule,
     MatInputModule,
     MatSelectModule,
-    AppRoutingModule
+    MatIconModule,
+    MatListModule,
+    IconsModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

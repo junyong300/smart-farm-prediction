@@ -1,19 +1,20 @@
 import { AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 // import { PredictInternalSelfDto } from '@libs/models/sensor';
-import { SimpleDeviceDto } from '@libs/models/device';
+import { DeviceDto, SimpleDeviceDto } from '@libs/models/device';
 import { MatTableDataSource } from '@angular/material/table';
 import * as am5 from '@amcharts/amcharts5';
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated';
 import * as am5xy from '@amcharts/amcharts5/xy';
+import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'predict',
-  templateUrl: './predict.component.html',
-  styleUrls: ['./predict.component.scss'],
+  selector: 'predict-env',
+  templateUrl: './predict-env.component.html',
+  styleUrls: ['./predict-env.component.scss'],
 })
-export class PredictComponent implements OnInit, AfterViewInit {
-  devices: SimpleDeviceDto[];
+export class PredictEnvComponent implements OnInit, AfterViewInit {
+  devices$: Observable<DeviceDto[]>;
   selected: number;
   chart: am5xy.XYChart;
   baseTime: string;
@@ -24,13 +25,16 @@ export class PredictComponent implements OnInit, AfterViewInit {
     const now = new Date();
     const offsetMs = now.getTimezoneOffset() * 60 * 1000;
     const dt = new Date(now.getTime() - offsetMs).toISOString().split('T');
-    this.baseTime = dt[0] + ' ' + dt[1].substr(0, 5);
+    this.baseTime = dt[0] + ' ' + dt[1].substring(0, 5);
+    this.devices$ = this.http.post<DeviceDto[]>('device/list');
+    /*
     this.http.get<SimpleDeviceDto[]>('getSimpleDeviceList').subscribe((devices) => {
       this.devices = devices;
       if (devices?.length > 0) {
         this.selected = devices[0].id;
       }
     });
+    */
   }
 
   ngAfterViewInit() {
