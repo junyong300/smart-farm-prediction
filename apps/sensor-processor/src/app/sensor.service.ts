@@ -33,7 +33,7 @@ export class SensorService {
    * @returns 
    */
   getDeviceBySerial(serial) {
-    const device = this.devices.find(d => d.serialNumber == serial);
+    const device = this.devices.find(d => d.serial == serial);
     return device;
   }
 
