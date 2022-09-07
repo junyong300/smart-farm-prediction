@@ -9,6 +9,7 @@
     "db": "libs/db",
     "edge-mon": "apps/edge-mon",
     "edge-mon-e2e": "apps/edge-mon-e2e",
+    "farm": "apps/farm",
     "models": "libs/models",
     "sensor-processor": "apps/sensor-processor",
     "utils": "libs/utils"

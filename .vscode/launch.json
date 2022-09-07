@@ -20,6 +20,15 @@
       "console": "integratedTerminal"
     },
     {
+      "type": "node",
+      "name": "Launch Farm App",
+      "request": "launch",
+      "runtimeArgs": [ "run-script", "start", "farm"],
+      "runtimeExecutable": "npm",
+      "skipFiles": [ "<node_internals>/**" ],
+      "console": "integratedTerminal"
+    },
+    {
       "name": "Launch AI App",
       "type": "node",
       "request": "launch",
