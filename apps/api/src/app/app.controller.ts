@@ -1,10 +1,12 @@
-import { BadRequestException, Controller, Get, Inject, Post, Req } from '@nestjs/common';
+import { BadRequestException, Controller, Get, Inject, Post, Req, UseInterceptors } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices'
 import { Request } from 'express';
 import { timeout } from 'rxjs/operators';
 import { Logger } from "@nestjs/common";
 import { CommService } from '@libs/comm';
+import { MakeJsonResponseInterceptor } from './interceptors/make-json-response.interceptor';
 
+@UseInterceptors(MakeJsonResponseInterceptor)
 @Controller()
 export class AppController {
   constructor(@Inject('REDIS') private redis: ClientProxy, private commService: CommService) {}
