@@ -4,13 +4,15 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:webpack",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/farm",
         "main": "apps/farm/src/main.ts",
         "tsConfig": "apps/farm/tsconfig.app.json",
-        "assets": ["apps/farm/src/assets"]
+        "assets": ["apps/farm/src/assets"],
+        "target": "node",
+        "compiler": "tsc"
       },
       "configurations": {
         "production": {
