@@ -4,13 +4,15 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:webpack",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/sensor-processor",
         "main": "apps/sensor-processor/src/main.ts",
         "tsConfig": "apps/sensor-processor/tsconfig.app.json",
-        "assets": ["apps/sensor-processor/src/assets"]
+        "assets": ["apps/sensor-processor/src/assets"],
+        "target": "node",
+        "compiler": "tsc"
       },
       "configurations": {
         "production": {

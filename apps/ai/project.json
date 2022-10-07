@@ -4,13 +4,15 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:webpack",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/ai",
         "main": "apps/ai/src/main.ts",
         "tsConfig": "apps/ai/tsconfig.app.json",
-        "assets": ["apps/ai/src/assets"]
+        "assets": ["apps/ai/src/assets"],
+        "target": "node",
+        "compiler": "tsc"
       },
       "configurations": {
         "production": {
