@@ -38,6 +38,7 @@ yarn-error.log
 testem.log
 /typings
 *.plantuml
+/logs
 
 # System Files
 .DS_Store
@@ -46,3 +47,7 @@ Thumbs.db
 nohup.out
 
 .angular
+
+# models
+ai_models/*
+!ai_models/train_options/

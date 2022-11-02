@@ -6,6 +6,8 @@ from .external_basic import ExternalBasicModel
 from .external_wfs import ExternalWfsModel
 from .internal_self import InternalSelfModel
 from .internal_basic import InternalBasicModel
+from .growth_basic import GrowthBasicModel
+from .internal_poc import InternalPocModel
 
 logger = logging.getLogger(__name__)
 

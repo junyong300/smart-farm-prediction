@@ -1,0 +1,6 @@
+{
+  "model": "InternalPoc",
+  "description": "aihub poc",
+  "epoch": 200,
+  "mode": "poc"
+}
