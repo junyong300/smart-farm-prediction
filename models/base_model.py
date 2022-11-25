@@ -18,6 +18,10 @@ class BaseModel(object, metaclass=ABCMeta):
     def __init__(self, option: ModelOption):
         self.option = option
         self.logger.info(option)
+        
+        gpus = tf.config.experimental.list_physical_devices('GPU')
+        for gpu in gpus:
+            tf.config.experimental.set_memory_growth(gpu, True)
 
         log_dir = "logs/fit/" + self.name + "/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
         self.strategy = tf.distribute.MirroredStrategy()
@@ -37,8 +41,7 @@ class BaseModel(object, metaclass=ABCMeta):
     
     async def getConn(self):
         conf = self.option.conf;
-        conn = await DbConn().connect(conf.DB_TYPE_LEGACY, conf.DB_HOST_LEGACY, conf.DB_PORT_LEGACY, conf.DB_DATABASE_LEGACY,
-                conf.DB_USER_LEGACY, conf.DB_PASSWORD_LEGACY.strip('"'))
+        conn = await DbConn().connect(conf.DB_TYPE, conf.DB_HOST, conf.DB_PORT, conf.DB_DATABASE, conf.DB_USER, conf.DB_PASSWORD.strip('"'))
         return conn
     
     async def makeDataset(self):
@@ -52,7 +55,7 @@ class BaseModel(object, metaclass=ABCMeta):
         dataset = tf.data.Dataset.from_tensor_slices((input_tensor, label_tensor))
 
         return dataset
-
+    
     async def loadOrFetch(self):
         """
         feather 파일이 있으면 사용하고, 없으면 db에서 불러 와서 feather 파일로 저장
@@ -61,7 +64,7 @@ class BaseModel(object, metaclass=ABCMeta):
         if os.path.isfile(fileName):
             df = pd.read_feather(fileName)
         else:
-            rs = await self.fetchDb()
+            rs = await self.fetchEnv()
             df = pd.DataFrame(rs)
             df.columns = rs[0].keys()
             if not os.path.exists("temp"):
@@ -72,11 +75,9 @@ class BaseModel(object, metaclass=ABCMeta):
 
         return df
 
-    @abstractmethod
-    async def fetchDb(self):
+    async def fetchEnv(self):
         pass
 
-    @abstractmethod
     def preprocess(self, rs):
         pass
 
@@ -86,11 +87,11 @@ class BaseModel(object, metaclass=ABCMeta):
         split_point = int(len(dataset) * 0.90)
         trainset = dataset.take(split_point)
         # sequence들이 10분 갭으로 만들어져 있어서 trainset과 testset이 계속 겹치기 때문에 대략 이틀치(5 devices)를 띄운다
-        testset = dataset.skip(split_point + 1000)
+        testset = dataset.skip(split_point)
         self.logger.info(F"Train Size: {len(trainset)}, Test Size: {len(testset)}")
 
-        trainset = trainset.shuffle(buffer_size=100000, reshuffle_each_iteration=True).batch(256)
-        testset = testset.batch(256)
+        trainset = trainset.shuffle(buffer_size=10000, reshuffle_each_iteration=True).batch(512)
+        testset = testset.batch(512)
 
         self.model.fit(trainset, epochs=self.option.get('epoch', 50), validation_data=testset, callbacks=[self.tensorboard_callback])
 

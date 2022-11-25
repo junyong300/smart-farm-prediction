@@ -18,6 +18,15 @@
       "console": "integratedTerminal"
     },
     {
+      "name": "Python: AI Train - Pest",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/apps/ai_train/main.py",
+      "args": ["pest-basic-1"],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/devenv"
+    },
+    {
       "name": "Python: Current File",
       "type": "python",
       "request": "launch",
