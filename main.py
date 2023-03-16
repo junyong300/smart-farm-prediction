@@ -1,4 +1,3 @@
-import asyncio
 import logging
 import sys
 import logging_setup
@@ -13,18 +12,22 @@ conf.load()
 logging_setup.setup("ai-train.log", conf.LOG_LEVEL)
 logger = logging.getLogger(__name__)
 
-async def main(modelId):
+# 한 프로세스에 하나의 train만 진행한다
+def main(modelId):
     logger.info("AI Train Start!")
 
     option = ModelOption(modelId, conf)
     model = models.create(option)
     if model:
-        ds = await model.makeDataset()
         #if hasattr(option, 'test') and option.test:
-        if option.get('test'):
+        mode = option.get('mode')
+        if mode == 'test':
             model.loadModel()
-            model.test(ds)
+            model.test()
+        elif mode == 'poc':
+            model.self_proof()
         else:
+            ds = model.makeDataset()
             model.train(ds)
 
-asyncio.run(main(sys.argv[1]))
+main(sys.argv[1])
