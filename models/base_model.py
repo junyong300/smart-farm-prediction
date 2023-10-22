@@ -19,6 +19,10 @@ class BaseModel(object, metaclass=ABCMeta):
     def __init__(self, option: ModelOption):
         self.option = option
         self.logger.info(option)
+        
+        gpus = tf.config.experimental.list_physical_devices('GPU')
+        for gpu in gpus:
+            tf.config.experimental.set_memory_growth(gpu, True)
 
         gpus = tf.config.experimental.list_physical_devices('GPU')
         for gpu in gpus:
@@ -39,7 +43,6 @@ class BaseModel(object, metaclass=ABCMeta):
     @property
     def id(self):
         return self.option.modelId
-
     #async def getConn(self):
     #    conf = self.option.conf;
     #    conn = await DbConn().connect(conf.DB_TYPE, conf.DB_HOST, conf.DB_PORT, conf.DB_DATABASE, conf.DB_USER, conf.DB_PASSWORD.strip('"'))
