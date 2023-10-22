@@ -6,8 +6,34 @@
       "type": "python",
       "request": "launch",
       "program": "${workspaceFolder}/main.py",
-      "args": ["internal-basic-1"],
+      "args": ["growth-simple-1"],
       "console": "integratedTerminal"
+    },
+    {
+      "name": "Python: AI Train - Internal + aihub poc",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "args": ["internal-poc-1"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Python: AI Train - Growth",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/apps/ai_train/main.py",
+      "args": ["growth-simple-1"],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/devenv"
+    },
+    {
+      "name": "Python: AI Train - Pest",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/apps/ai_train/main.py",
+      "args": ["pest-basic-1"],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/devenv"
     },
     {
       "name": "Python: Current File",
