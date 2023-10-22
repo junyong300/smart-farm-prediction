@@ -7,6 +7,8 @@ from .external_wfs import ExternalWfsModel
 from .internal_self import InternalSelfModel
 from .internal_basic import InternalBasicModel
 from .growth_basic import GrowthBasicModel
+from .growth_simple import GrowthSimpleModel
+
 from .internal_poc import InternalPocModel
 from .pest_basic import PestBasicModel
 

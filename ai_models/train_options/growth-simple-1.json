@@ -1,0 +1,6 @@
+{
+  "model": "GrowthSimple",
+  "description": "Growth",
+  "epoch": 200,
+  "mode": "train"
+}

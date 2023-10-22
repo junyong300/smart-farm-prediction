@@ -1,5 +1,4 @@
 import datetime
-import databases
 from pandas.core.frame import DataFrame
 import tensorflow as tf
 import tensorflowjs as tfjs
@@ -19,7 +18,7 @@ class ExternalBasicModel(BaseModel):
         with strategy.scope():
             self.tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
 
-            input_width = 60 * 24 * 2 // 10 
+            input_width = 60 * 24 * 2 // 10
             input_shape = (input_width, 6)
 
             input_layer = tf.keras.layers.Input(input_shape)
@@ -58,7 +57,7 @@ class ExternalBasicModel(BaseModel):
         await conn.disconnect()
 
         return rs
-    
+
     def preprocess(self, rs):
         input_width = 60 * 24 * 2
         label_width = 60 * 24 * 2

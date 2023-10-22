@@ -38,7 +38,11 @@ yarn-error.log
 testem.log
 /typings
 *.plantuml
+data/
+checkpoints/
 /logs
+/temp
+
 
 # System Files
 .DS_Store
@@ -51,3 +55,6 @@ nohup.out
 # models
 ai_models/*
 !ai_models/train_options/
+
+#dataset
+/dataset

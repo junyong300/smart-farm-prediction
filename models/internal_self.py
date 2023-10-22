@@ -5,7 +5,7 @@ import tensorflow as tf
 from tqdm import tqdm
 import datetime
 import logging
-from databases import Database
+#from databases import Database
 
 from tensorflow.python.data.ops.dataset_ops import Dataset
 
@@ -33,7 +33,7 @@ class InternalSelfModel(BaseModel):
         with strategy.scope():
             self.tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
 
-            input_width = 60 * 24 * 2 // 10 
+            input_width = 60 * 24 * 2 // 10
             #input_shape = (input_width, 7)
             input_shape = (input_width, 6)
 
@@ -91,7 +91,8 @@ class InternalSelfModel(BaseModel):
 
         return dataset
 
-    async def fetchDb(self, dbConn: Database ):
+    #async def fetchEnv(self, dbConn: Database ):
+    async def fetchEnv(self):
         target_devices = ','.join(map(str, self.devices))
         #sql = ("select device_idx didx, sensing_dt sdt, sie_temp t, sie_humidity h, sie_co2 co2 from sdh_internal "
         sql = ("select device_idx didx, sensing_dt sdt, sie_temp t, sie_co2 co2 from sdh_internal "
@@ -103,9 +104,10 @@ class InternalSelfModel(BaseModel):
                 "order by didx, sdt"
         )
         self.logger.debug("sql:" + sql)
-        rs = await dbConn.fetch_all(sql)
-        return rs
-    
+        #rs = await dbConn.fetch_all(sql)
+        #return rs
+        return None # 임시
+
     def preprocess(self, rs):
         input_width = 60 * 24 * 2
         label_width = 60 * 24
@@ -125,7 +127,7 @@ class InternalSelfModel(BaseModel):
             # next sdt
             nsdt = rs[i + 1]['sdt'].replace(second=0, microsecond=0)
             interval = int((nsdt - csdt).total_seconds() / 60) # 분
-        
+
             if interval > 30 or current_didx != rs[i+1]['didx']:
                 # 다음 데이터에서 갭이 발생하거나 device가 변경되는 경우는 지금까지의 sequence를 마무리한다
                 # sequence 길이가 min_point(3일치) 이상이면 사용
