@@ -1,0 +1,73 @@
+---
+#
+# @copyright Electronics and Telecommunications Research Institute (ETRI) All Rights Reserved.
+# @author Junyong Park/junyong.park@etri.re.kr, Jong-Ryul Lee, Yong-Hyuk Moon
+# @created 2023-01-26
+# @last-modified 2023-01-27
+#
+
+#### ESPD 기본 설정 ####
+name: 'ESPD Configuration'
+
+### 하드웨어 관련 설정
+num_gpus: 1
+device: cuda:0
+
+### 데이터 세트 관련 설정
+dataset:
+  name: v6
+  root: './data/espd_v6'
+  annotation: './data/espd_v6/annotations/instances_default.json'
+  train_ids: './data/espd_v6/annotations/train.mx'
+  val_ids: './data/espd_v6/annotations/val.mx'
+  images: './data/espd_v6/images/'
+  labels:
+    - Background
+    - 1_LeafMold
+    - 2_YellowLeafCurl
+    - 3_SerpentineLeafMiner
+    - 4_PineBug
+    - 5_LeafSpot
+    - 6_PowderyMildew
+    - 7_Healthy
+
+### 학습 데이터 관련 설정
+num_class: 8
+workers: 16
+batch_size: 64
+img_size: 256
+split: 0.2
+
+### 학습 관련 설정
+epochs: 100
+lr: 0.0001
+momentum: 0.9
+weight-decay: 0.00001
+val_epoch: 5
+save_epoch: 5
+
+### 출력 관련 설정
+save-dir: './checkpoints/'
+demo-dir: './results/'
+
+### 모델 관련 설정
+backbone: efficientnet_b0
+segmentation: espd
+branch_num : 3
+spatial_mid : 256
+spatial_out : 256
+branch_out : 256
+head_in     : 256
+head_mid    : 256
+
+### 시각화 관련 설정
+colorpallete: [
+    0, 0, 0,
+    255, 0, 0,
+    0, 255, 0,
+    0, 0, 255,
+    255, 255, 0,
+    255, 0, 255,
+    0, 255, 255,
+    255,255,255
+]
