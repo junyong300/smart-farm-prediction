@@ -24,6 +24,8 @@ batch_pix_accuracy, batch_intersection_union
 from model.dataset import SegmentationDataset
 import numpy as np
 from model.utils import read_yaml, SegmentationMetrics
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix, accuracy_score, ConfusionMatrixDisplay
 
 
 def parse_args():
@@ -35,7 +37,7 @@ def parse_args():
     return parser.parse_args()
 
 def computeIoU(y_pred_batch, y_true_batch, num_class, batch_size, features):
-    return np.mean(np.asarray([pixelAccuracy(y_pred_batch[i], y_true_batch[i], num_class, batch_size, features) for i in range(len(y_true_batch))])) 
+    return np.mean(np.asarray([pixelAccuracy(y_pred_batch[i], y_true_batch[i], num_class, batch_size, features) for i in range(len(y_true_batch))]))
 
 def pixelAccuracy(y_pred, y_true, num_class, batch_size, features):
     y_pred = np.argmax(np.reshape(y_pred,[num_class,batch_size,features]),axis=0)
@@ -50,16 +52,16 @@ def demo():
     args = parse_args()
     cfg = read_yaml(args.configs)
     filename = '{}_{}_{}_'.format(
-        cfg['dataset']['name'], cfg['segmentation'], cfg['backbone'])  
+        cfg['dataset']['name'], cfg['segmentation'], cfg['backbone'])
     path_filename = os.path.join(cfg['save-dir'], filename)
-  
+
     # Device 기기 설정
     device = torch.device('cuda:0')
     if args.no_cuda:
         device = torch.device('cpu')
-    
+
     # 결과 폴더 생성
-    shutil.rmtree("./results")
+    shutil.rmtree("./results", True)
     if not os.path.exists("./results"):
         os.makedirs("./results")
 
@@ -69,23 +71,31 @@ def demo():
     model.open_exit()
     model.test_mode()
     model.eval()
-   
+
     # 추론 테스트 할 Segmentation Dataset 및 Dataloader
     valset = SegmentationDataset(cfg = cfg, split = 'val')
     val_loader = DataLoader(dataset=valset, batch_size=1, num_workers=8)
 
     # 추론 성능 지표
     metric = SegmentationMetric(nclass=cfg['num_class'])
-    metric.reset() 
-       
+    metric.reset()
+
     # 입력 폴더 및 출력 폴더 설정
     img_folder = cfg['dataset']['images']
 
+    y_true = []
+    y_pred = []
+
+    i = 0
     for image, targets, c, filename in val_loader:
+        #if i == 10:
+        #    break
+        #i = i + 1
+
         # 추론 데이터 입력
         image = image.view(1,3,cfg['img_size'], cfg['img_size'])
         target = targets.type(torch.LongTensor)
-        if c.item() == 0:
+        if c.item() <= 1:
             continue
         print("filename: "+filename[0])
 
@@ -99,18 +109,17 @@ def demo():
         correct, labeled = batch_pix_accuracy(outs, target)
         pixAcc = correct / labeled
 
-        print("mIoU: "+str(mIoU))
-        print("pixAcc: "+str(pixAcc))
-        
+        #print("mIoU: "+str(mIoU))
+        #print("pixAcc: "+str(pixAcc))
 
 
         # 추론 결과 이미지로 역전환
         tensor = image.squeeze()
         z = tensor * torch.tensor([0.2196, 0.2135, 0.2184]).view(3,1,1)
         z = z + torch.tensor([0.4742, 0.4680, 0.4666]).view(3,1,1)
-        
+
         img = torchvision.transforms.ToPILImage(mode='RGB')(z)
-        
+
         # 추론 결과으로부터 마스크 생성
         pred = out.squeeze(0).cpu().data.numpy()
         mask = Image.fromarray(pred.astype('uint8')).convert("L")
@@ -123,7 +132,7 @@ def demo():
                 alpha = 0
             else:
                 alpha = 200
-            new_pixels.append((pixel[0], pixel[1], pixel[2], alpha))       
+            new_pixels.append((pixel[0], pixel[1], pixel[2], alpha))
         mask.putdata(new_pixels)
         img = img.convert("RGBA")
         img.alpha_composite(mask)
@@ -135,11 +144,17 @@ def demo():
         predicted_label = cfg['dataset']['labels'][int(predd.item())]
         ImageDraw.Draw(img).text(
             (0,0), "Predicted Label: "+predicted_label, (255,255,255))
-        
+
         # 정답 레이블 텍스트 입히기
         ground_label = cfg['dataset']['labels'][c]
         ImageDraw.Draw(img).text(
             (0,12),"Ground Label: "+ground_label, (255,255,255))
+
+
+        #y_pred.append(predd.item())
+        #y_true.append(c.item())
+        y_pred.append(predicted_label)
+        y_true.append(ground_label)
 
         # 신뢰도(Confidence) 텍스트 입히기
         ImageDraw.Draw(img).text(
@@ -148,7 +163,7 @@ def demo():
         # 픽셀 정확도(Pixel Accuracy) 텍스트 입히기
         ImageDraw.Draw(img).text(
             (0,36),"Pixel Accuracy: {:.3f}".format(pixAcc), (255,255,255))
-        
+
         # 영역 정확도(mIoU) 텍스트 입히기
         ImageDraw.Draw(img).text(
             (0,48),"mIoU: {:.3f}".format(mIoU), (255,255,255))
@@ -156,8 +171,26 @@ def demo():
         # 출력 이미지 저장하기
         output_file = os.path.join("./results/", filename[0][:-4]+".png")
         img.save(output_file)
-    
+
     print(model.context.exit_count)
+
+    labels = cfg['dataset']['labels']
+    labels.pop(0)
+
+    cm = confusion_matrix(y_true, y_pred, labels=labels)
+    ravel = cm.ravel()
+    print(cm)
+    print("Accuracy:", accuracy_score(y_true, y_pred))
+
+    #sns.heatmap(cm, annot=True, cmap='Blues')
+    disp = ConfusionMatrixDisplay(cm, display_labels=labels)
+    disp.plot()
+    plt.xlabel('Predicted')
+    plt.ylabel('True')
+    plt.xticks(rotation=30, ha='right')
+    plt.tight_layout()
+    plt.savefig("confusion_matrix.jpg")
+
 
 if __name__=='__main__':
     torch.cuda.empty_cache()

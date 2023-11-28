@@ -58,3 +58,8 @@ ai_models/*
 
 #dataset
 /dataset
+
+#espd
+results/
+*.txt
+*.jpg

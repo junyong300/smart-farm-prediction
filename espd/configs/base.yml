@@ -22,6 +22,7 @@ dataset:
   val_ids: './data/espd_v6/annotations/val.mx'
   images: './data/espd_v6/images/'
   labels:
+    - dummy
     - Background
     - 1_LeafMold
     - 2_YellowLeafCurl
@@ -30,11 +31,13 @@ dataset:
     - 5_LeafSpot
     - 6_PowderyMildew
     - 7_Healthy
+    - 8_BacterialCanker
+    - 9_ChlorosisVirus
 
 ### 학습 데이터 관련 설정
-num_class: 8
+num_class: 11
 workers: 16
-batch_size: 64
+batch_size: 16
 img_size: 256
 split: 0.2
 
@@ -69,5 +72,8 @@ colorpallete: [
     255, 255, 0,
     255, 0, 255,
     0, 255, 255,
-    255,255,255
+    255,255,255,
+    255, 127, 0,
+    0, 255, 127,
+    127, 0, 255
 ]

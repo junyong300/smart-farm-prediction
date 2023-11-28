@@ -36,7 +36,8 @@ def get_backbone(cfg):
         cfg['__fc_features__'] = backbone.fc.in_features
     elif name == 'efficientnet_b0':
         backbone = efficientnet.efficientnet_b0(
-            weights=models.EfficientNet_B0_Weights.DEFAULT, progress=True)
+            #weights=models.EfficientNet_B0_Weights.DEFAULT, progress=True)
+            weights=models.EfficientNet_B0_Weights.IMAGENET1K_V1, progress=True)
         backbone.classifier[-1] = nn.Linear(
             backbone.classifier[-1].in_features, cfg['num_class'])
         cfg['__fc_features__'] = backbone.classifier[-1].in_features

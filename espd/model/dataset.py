@@ -32,18 +32,18 @@ class SegmentationDataset():
             ids_file    = cfg['dataset']['train_ids']
         else:
             ids_file    = cfg['dataset']['val_ids']
-        
+
         # COCO 파일 로드
         self.coco = COCO(ann_file)
         self.coco_mask = mask
 
         # 이미지를 Tensor로 바꿀 Transform 정의
         self.transform = transforms.Compose([
-            transforms.ToTensor(),           
+            transforms.ToTensor(),
             transforms.Normalize(
                 [0.4742, 0.4680, 0.4666],
                 [0.2196, 0.2135, 0.2184]),
-        ])       
+        ])
 
         # COCO indices 초기화
         if os.path.exists(ids_file):
@@ -55,13 +55,13 @@ class SegmentationDataset():
 
             # 데이터세트 train/val 배분
             np.random.shuffle(indices)
-            
+
             splits = int(np.floor(float(cfg['split']) * len(indices)))
             train_idx, val_idx = indices[splits:], indices[:splits]
-            
+
             # 데이터세트 train/val indices 저장
             print(
-                "spliting len(dataset)", len(indices), 
+                "spliting len(dataset)", len(indices),
                 "into train", len(train_idx), "and val", len(val_idx))
             with open(cfg['dataset']['train_ids'], 'wb') as f:
                 pickle.dump(train_idx, f)
@@ -77,6 +77,7 @@ class SegmentationDataset():
         return len(self.ids)
 
     def __getitem__(self, index):
+        global cnt
         """Fetch item of dataset"""
         # 받은 index로부터 ids 가져옴
         img_id = self.ids[index]
@@ -86,8 +87,9 @@ class SegmentationDataset():
         filepath = self.cfg['dataset']['images']
         filename = img_metadata['file_name']
         img = Image.open(os.path.join(filepath, filename)).convert("RGB")
-        
+
         # 받은 ids 로부터 Annotation 가지고옴
+        annId = self.coco.getAnnIds(imgIds=img_id)
         cocotarget = self.coco.loadAnns(self.coco.getAnnIds(imgIds=img_id))
 
         # Annotation으로부터 Mask 생성
@@ -95,7 +97,7 @@ class SegmentationDataset():
             self._gen_seg_mask(
                 cocotarget, img_metadata['height'], img_metadata['width']))
 
-        # Mode(train/val)에 따라 transform 구성 맞춤 
+        # Mode(train/val)에 따라 transform 구성 맞춤
         if self.mode == 'train':
             img, mask = self._sync_transform(img, mask)
         elif self.mode == 'val':
@@ -106,13 +108,13 @@ class SegmentationDataset():
         # Normalize, toTensor으로 전환
         if self.transform is not None:
             img = self.transform(img)
-        
+
         # Classname 읽어옴, 만약 없으면 background로 정의
         if len(cocotarget) > 0:
-            classname = cocotarget[0]['category_id']        
+            classname = cocotarget[0]['category_id']
         else:
-            classname = 0
-        
+            classname = 1
+
         # 이미지, 마스크, 객체 이름, 파일명 출력
         return img, mask, classname, filename
 
@@ -151,7 +153,7 @@ class SegmentationDataset():
 
         img = img.resize((ow, oh), Image.BILINEAR)
         mask = mask.resize((ow, oh), Image.NEAREST)
-        
+
         # Center crop
         width, height = img.size
         x1 = int(round(width - outsize) / 2)
@@ -159,7 +161,7 @@ class SegmentationDataset():
 
         img = img.crop((x1, y1, x1 + outsize, y1 + outsize))
         mask = mask.crop((x1, y1, x1 + outsize, y1 + outsize))
-        
+
         # Numpy transform
         img, mask = self._img_transform(img), self._mask_transform(mask)
         return img, mask
@@ -203,7 +205,7 @@ class SegmentationDataset():
         y1 = random.randint(0, height - img_size)
         img = img.crop((x1, y1, x1 + img_size, y1 + img_size))
         mask = mask.crop((x1, y1, x1 + img_size, y1 + img_size))
-        
+
         img, mask = self._img_transform(img), self._mask_transform(mask)
         return img, mask
 
