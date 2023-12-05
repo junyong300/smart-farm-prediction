@@ -12,6 +12,13 @@ import torchvision.models as models
 from torchvision.models import efficientnet, \
     mobilenet_v2, vgg, inception_v3, resnet, \
         wide_resnet50_2, wide_resnet101_2, regnet
+from torch.hub import load_state_dict_from_url
+from torchvision.models._api import WeightsEnum
+
+def get_state_dict(self, *args, **kwargs):
+    kwargs.pop("check_hash")
+    return load_state_dict_from_url(self.url, *args, **kwargs)
+WeightsEnum.get_state_dict = get_state_dict
 
 def get_backbone(cfg):
     """
