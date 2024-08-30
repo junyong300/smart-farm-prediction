@@ -13,7 +13,7 @@ $ poetry install
 # Running Predict
 ```bash
 $ poetry shell
-(etri start-farm predict-py3.9) $ python3 main.py
+(etri start-farm predict-py3.9) $ python3 main.py model_name
 ```
 
 ### Acknowledgement
