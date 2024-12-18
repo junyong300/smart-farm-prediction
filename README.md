@@ -13,7 +13,8 @@ $ poetry install
 # Running Predict
 ```bash
 $ poetry shell
-(etri start-farm predict-py3.9) $ python3 main.py model_name
+(etri start-farm predict-py3.9) $ shiny run --host 0.0.0.0 --port 8002 --reload app.py
+
 ```
 
 ### Acknowledgement
