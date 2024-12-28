@@ -1,3 +1,7 @@
+# Smart Farm Prediction
+
+A comprehensive system for monitoring and predicting farm environmental conditions and crop growth using Deep Learning.
+
 ## Overview
 
 Smart Farm Prediction combines environmental sensing with advanced machine learning to:
@@ -64,8 +68,3 @@ The system uses a configuration file located at `config/common.conf`. Key config
   - DB_USER
   - DB_PASSWORD
   - DB_DATABASE
-
-```
-
-### Acknowledgement
-This work was supported by Institute of Information & communications Technology Planning & Evaluation (IITP) grant funded by the Korea government(MSIT) (No. 2021-0-00907, Development of Adaptive and Lightweight Edge-Collaborative Analysis Technology for Enabling Proactively Immediate Response and Rapid Learning).
