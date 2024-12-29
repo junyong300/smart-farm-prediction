@@ -13,6 +13,7 @@ Smart Farm Prediction combines environmental sensing with advanced machine learn
 
 ## System Architecture
 
+
 ### Models
 The system includes several specialized prediction models:
 
@@ -32,6 +33,7 @@ The system includes several specialized prediction models:
    - AI Hub integration for environmental data
    - Pest observation processing
    - CSV and Excel file handling
+
 
 ## Prerequisites
 
